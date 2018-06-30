@@ -15,5 +15,6 @@ void heap_check(void *obj) {
 }
 
 int map_char(char c) {
+    /* 0-9 for digits and 10-35 for alphabet */
     return isdigit(c) ? (c - BASE_DIGIT) : (c - BASE_CHAR + CHAR_OFFSET);
 }
