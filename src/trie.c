@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "trie.h"
 
 trie_node_t *create_trie() {
@@ -45,7 +46,4 @@ void insert(trie_node_t *trie, char* new_string) {
     }
 }
 
-//TODO enum for alphabet with non-english char or something similar
 //TODO use a string in the '\0' node or a find a better solution
-//TODO modify query_next++ to be able to be used with non-english char
-
