@@ -30,10 +30,8 @@ void trie_insert(TrieNode *trie, char* new_string) {
 
     /* check if string exists and increase occurrencies, otherwise create it*/
     next_position = map_char('\0');
-    if(tmp_node->next[next_position] != NULL) 
-        tmp_node->next[next_position]->occurrencies++;
-    else 
-        attach_new_node(tmp_node, next_position, 1);
+    tmp_node->next[next_position] != NULL ? 
+        tmp_node->next[next_position]->occurrencies++ : attach_new_node(tmp_node, next_position, 1);
 }
 
 static void init_node(TrieNode* node, unsigned int occurrencies) {
