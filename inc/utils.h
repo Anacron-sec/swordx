@@ -1,4 +1,4 @@
 #pragma once
 
-void heap_check(void *);
+void check_heap(void *);
 int map_char(char);

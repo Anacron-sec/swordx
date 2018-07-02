@@ -3,38 +3,48 @@
 #include "trie.h"
 #include "utils.h"
 
+static void init_node(TrieNode*, unsigned int);
+static void attach_new_node(TrieNode*, short, unsigned int);
+
 TrieNode *create_trie() {
     TrieNode *trie = (TrieNode*) malloc(sizeof(TrieNode)); check_heap(trie);
-    trie->occurrencies = 0;
-    for(int i = 0; i < CHARSET; i++){
-        trie->next[i] = NULL;
-    }
+    init_node(trie, 0);
+
     return trie;
 }
 
-void insert(TrieNode *trie, char* new_string) {
-    TrieNode *tmp_node, *new_node;
-    char *query_next;
-    tmp_node = trie; query_next = new_string;
+void trie_insert(TrieNode *trie, char* new_string) {
+    TrieNode *tmp_node = trie; 
+    char *query_next = new_string;
+    unsigned int next_position = 0;
+
     while(*query_next != '\0') {
-        if(tmp_node->next[map_char(*query_next)] == NULL) {
-            new_node = (TrieNode*) malloc(sizeof(TrieNode)); check_heap(new_node);
-            new_node->occurrencies = 0;
-            for(int i = 0; i < CHARSET; i++){
-                new_node->next[i] = NULL;
-            }
-            tmp_node->next[map_char(*query_next)] = new_node;
-        }
-        /* move to next char in both trie and new string */
-        tmp_node = tmp_node->next[(int)(*query_next)];
+        next_position = map_char(*query_next);
+        if(tmp_node->next[next_position] == NULL)
+            attach_new_node(tmp_node, next_position, 0);
+        
+        /* move to the next char in both trie and new string */
+        tmp_node = tmp_node->next[next_position];
         query_next++;
     }
+
     /* check if string exists and increase occurrencies, otherwise create it*/
-    if( tmp_node->next[(int)'\0'] != NULL ) tmp_node->next[(int)'\0']->occurrencies++;
-    else {
-        TrieNode *word;
-        word = (TrieNode*) malloc(sizeof(TrieNode)); check_heap(word);
-        word->occurrencies = 1;
-        tmp_node->next[(int)'\0'] = word;
+    next_position = map_char('\0');
+    if(tmp_node->next[next_position] != NULL) 
+        tmp_node->next[next_position]->occurrencies++;
+    else 
+        attach_new_node(tmp_node, next_position, 1);
+}
+
+static void init_node(TrieNode* node, unsigned int occurrencies) {
+    node->occurrencies = occurrencies;
+    for(int i = 0; i < CHARSET; i++){
+        node->next[i] = NULL;
     }
+}
+
+static void attach_new_node(TrieNode* node, short position, unsigned int occurrencies) {
+    TrieNode *new_node = (TrieNode*) malloc(sizeof(TrieNode)); check_heap(new_node);
+    init_node(new_node, occurrencies);
+    node->next[position] = new_node;
 }
