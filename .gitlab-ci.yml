@@ -1,11 +1,11 @@
 build:
-  before_script:
-    - apt-get update -qq && apt-get install -y -qq build-essential
+  image: gcc:8
   script:
     - make
 
 test:
+  image: gcc:8
   before_script:
-    - apt-get update -qq && apt-get install -y -qq build-essential libcunit libcunit1-dev
+    - apt-get update -qq && apt-get install -y -qq libcunit1 libcunit1-dev
   script:
     - make test
