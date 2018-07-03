@@ -40,12 +40,12 @@ void trie_insert(TrieNode *trie, char* new_string) {
     tmp_node->occurrences++;
 }
 
-void trie_process_words (TrieNode* node, void (*callback)(char*, int)) {
+void trie_process_words (TrieNode* node, void (*process_function)(char*, int)) {
     if(node->occurrences > 0)
-        callback(node->target_word, node->occurrences);
+        process_function(node->target_word, node->occurrences);
     for(int i = 0; i < CHARSET; i++) {
         if(node->next[i] != NULL)
-            trie_process_words(node->next[i], callback);
+            trie_process_words(node->next[i], process_function);
     }
 }
 
