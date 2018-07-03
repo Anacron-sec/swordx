@@ -27,47 +27,69 @@ void test_create_trie (void) {
 
 void test_insert_single_word (void) {
     TrieNode* tmp_node;
-    char* word = "testword";
-    trie_insert(test_trie, word);
+    char* current_word = "testword";
+    trie_insert(test_trie, current_word);
     tmp_node = test_trie;
-    for(int i = 0; i < strlen(word); i++) {
-        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
+    for(int i = 0; i < strlen(current_word); i++) {
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(current_word[i])]);
     }
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 1);
+    CU_ASSERT_STRING_EQUAL(tmp_node->target_word, current_word);
 }
 
 void test_insert_multiple_words (void) {
     TrieNode* tmp_node;
-    char* word = "testword";
+    char* current_word = "testword";
     /* Add test word another 3 times */
     for (int i = 0; i < 3; i++) {
-        trie_insert(test_trie, word);
+        trie_insert(test_trie, current_word);
     }
     tmp_node = test_trie;
-    for(int i = 0; i < strlen(word); i++) {
-        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
+    for(int i = 0; i < strlen(current_word); i++) {
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(current_word[i])]);
     }
     /* 1 from the previous test + 3 of this  = 4*/
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 4);
+    CU_ASSERT_STRING_EQUAL(tmp_node->target_word, current_word);
 }
 
 void test_insert_different_words (void) {
     TrieNode* tmp_node;
-    char* previousword = "testword";
-    char* word = "testwordtwo";
-    trie_insert(test_trie, word);
+    char* previous_word = "testword";
+    char* current_word = "testwordtwo";
+    trie_insert(test_trie, current_word);
     tmp_node = test_trie;
 
     /* Tests current word with occurrency 1 */
-    for(int i = 0; i < strlen(word); i++) {
-        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
+    for(int i = 0; i < strlen(current_word); i++) {
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(current_word[i])]);
     }
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 1);
+    CU_ASSERT_STRING_EQUAL(tmp_node->target_word, current_word);
     tmp_node = test_trie;
     
     /* Tests previous word to still be of occurrency 4 */
-    for(int i = 0; i < strlen(previousword); i++) {
-        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
+    for(int i = 0; i < strlen(previous_word); i++) {
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(previous_word[i])]);
     }
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 4);
+    CU_ASSERT_STRING_EQUAL(tmp_node->target_word, previous_word);
+}
+
+static char words[2][500];
+static int word_occurrencies[2];
+
+void test_function(char* word_found, int occurrencies) {
+    static int i = 0;
+    strcpy(words[i], word_found);
+    word_occurrencies[i] = occurrencies;
+    i++;
+} 
+
+void test_process_words (void) {
+    trie_process_words(test_trie, test_function);
+    CU_ASSERT_EQUAL(word_occurrencies[0], 4);
+    CU_ASSERT_EQUAL(word_occurrencies[1], 1);
+    CU_ASSERT_STRING_EQUAL(words[0], "testword");
+    CU_ASSERT_STRING_EQUAL(words[1], "testwordtwo");
 }

@@ -7,7 +7,6 @@ static const char BASE_DIGIT = '0';
 static const char BASE_CHAR = 'a';
 static const int CHAR_OFFSET = 10;
 
-/* this function is meant to be used after a call to malloc or calloc to test the result */
 void check_heap(void *obj) {
     if(obj == NULL) {
         perror("Out of memory");
