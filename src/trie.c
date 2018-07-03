@@ -36,13 +36,13 @@ void trie_insert(TrieNode *trie, char* new_string) {
         strcpy(tmp_node->target_word, new_string);
     }
 
-    /* Increase occurencies in every case */
-    tmp_node->occurrencies++;
+    /* Increase occurences in every case */
+    tmp_node->occurrences++;
 }
 
 void trie_process_words (TrieNode* node, void (*callback)(char*, int)) {
-    if(node->occurrencies > 0)
-        callback(node->target_word, node->occurrencies);
+    if(node->occurrences > 0)
+        callback(node->target_word, node->occurrences);
     for(int i = 0; i < CHARSET; i++) {
         if(node->next[i] != NULL)
             trie_process_words(node->next[i], callback);
@@ -50,7 +50,7 @@ void trie_process_words (TrieNode* node, void (*callback)(char*, int)) {
 }
 
 static void init_node(TrieNode* node) {
-    node->occurrencies = 0;
+    node->occurrences = 0;
     node->target_word = NULL;
     for(int i = 0; i < CHARSET; i++){
         node->next[i] = NULL;

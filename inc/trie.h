@@ -3,7 +3,7 @@
 
 typedef struct TrieNode {
     struct TrieNode *next[CHARSET];
-    unsigned int occurrencies;
+    unsigned int occurrences;
     char* target_word;
 } TrieNode;
 
