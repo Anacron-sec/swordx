@@ -1,13 +1,17 @@
+stages:
+  - build
+  - test
+
 build:
+  stage: build  
   image: gcc:8
   script:
     - make
 
 test:
+  stage: test
   image: gcc:8
   before_script:
     - apt-get update -qq && apt-get install -y -qq libcunit1 libcunit1-dev
   script:
     - make test
-
-build-image:
