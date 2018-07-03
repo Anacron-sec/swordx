@@ -30,7 +30,8 @@ int main (void) {
         (NULL == CU_add_test(pSuite_trie, "create_trie", test_create_trie)) ||
         (NULL == CU_add_test(pSuite_trie, "insert_trie with a single word", test_insert_single_word)) ||
         (NULL == CU_add_test(pSuite_trie, "insert_trie with multiple same words", test_insert_multiple_words))||
-        (NULL == CU_add_test(pSuite_trie, "insert_trie with different words", test_insert_different_words)))
+        (NULL == CU_add_test(pSuite_trie, "insert_trie with different words", test_insert_different_words)) ||
+        (NULL == CU_add_test(pSuite_trie, "process_words", test_process_words)))
    {
       CU_cleanup_registry();
       return CU_get_error();

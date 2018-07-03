@@ -75,3 +75,21 @@ void test_insert_different_words (void) {
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 4);
     CU_ASSERT_STRING_EQUAL(tmp_node->target_word, previous_word);
 }
+
+static char words[2][500];
+static int word_occurrencies[2];
+
+void test_function(char* word_found, int occurrencies) {
+    static int i = 0;
+    strcpy(words[i], word_found);
+    word_occurrencies[i] = occurrencies;
+    i++;
+} 
+
+void test_process_words (void) {
+    trie_process_words(test_trie, test_function);
+    CU_ASSERT_EQUAL(word_occurrencies[0], 4);
+    CU_ASSERT_EQUAL(word_occurrencies[1], 1);
+    CU_ASSERT_STRING_EQUAL(words[0], "testword");
+    CU_ASSERT_STRING_EQUAL(words[1], "testwordtwo");
+}
