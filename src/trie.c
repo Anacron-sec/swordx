@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "trie.h"
 #include "utils.h"
 
@@ -27,11 +28,32 @@ void trie_insert(TrieNode *trie, char* new_string) {
         tmp_node = tmp_node->next[next_position];
         query_next++;
     }
+
+    /* If the word is new, allocates space for the new string and stores it setti */
+    if(tmp_node->target_word == NULL) {
+        tmp_node->target_word = malloc(strlen(new_string) * sizeof(char)); 
+        check_heap(tmp_node->target_word);
+        strcpy(tmp_node->target_word, new_string);
+    }
+
+    /* Increase occurencies in every case */
     tmp_node->occurrencies++;
+}
+
+void trie_process_words (TrieNode* trie, void (*callback)(char*, int)) {
+    /*
+    if(trie->occurrencies > 0)
+        callback(word, occurencies);
+    for(int i = 0; i < CHARSET; i++) {
+        if(trie->next[i] != NULL)
+            trie_process_words(trie->next[i], callback);
+    }
+    */
 }
 
 static void init_node(TrieNode* node) {
     node->occurrencies = 0;
+    node->target_word = NULL;
     for(int i = 0; i < CHARSET; i++){
         node->next[i] = NULL;
     }
