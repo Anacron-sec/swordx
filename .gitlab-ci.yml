@@ -9,3 +9,5 @@ test:
     - apt-get update -qq && apt-get install -y -qq libcunit1 libcunit1-dev
   script:
     - make test
+
+build-image:
