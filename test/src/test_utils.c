@@ -17,12 +17,13 @@ void test_map_char_digits (void) {
     }
 }
 
-void test_map_char_nul (void) {
-    CU_ASSERT_EQUAL(map_char('\0'), 36);
-}
-
 void test_map_char_uppercase (void) {
     for (int i = 0; i < 26; i++) {
         CU_ASSERT_EQUAL(map_char('A' + i), (i + 10));
     }
+}
+
+void test_map_char_invalid (void) {
+    char invalid_char = '?';
+    CU_ASSERT_EQUAL(map_char(invalid_char), -1);
 }

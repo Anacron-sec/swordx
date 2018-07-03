@@ -7,3 +7,4 @@ void test_map_char_alphabet (void);
 void test_map_char_digits (void);
 void test_map_char_nul (void);
 void test_map_char_uppercase (void);
+void test_map_char_invalid (void);

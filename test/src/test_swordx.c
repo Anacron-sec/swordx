@@ -25,8 +25,8 @@ int main (void) {
 
     if ((NULL == CU_add_test(pSuite_utils, "map_char with alphabet", test_map_char_alphabet)) ||
         (NULL == CU_add_test(pSuite_utils, "map_char with digits", test_map_char_digits)) ||
-        (NULL == CU_add_test(pSuite_utils, "map_char with nul", test_map_char_nul)) ||
         (NULL == CU_add_test(pSuite_utils, "map_char with uppercase letters", test_map_char_uppercase)) ||
+        (NULL == CU_add_test(pSuite_utils, "map_char with invalid char", test_map_char_invalid)) ||
         (NULL == CU_add_test(pSuite_trie, "create_trie", test_create_trie)) ||
         (NULL == CU_add_test(pSuite_trie, "insert_trie with a single word", test_insert_single_word)) ||
         (NULL == CU_add_test(pSuite_trie, "insert_trie with multiple same words", test_insert_multiple_words))||

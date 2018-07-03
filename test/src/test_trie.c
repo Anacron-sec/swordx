@@ -31,10 +31,9 @@ void test_insert_single_word (void) {
     trie_insert(test_trie, word);
     tmp_node = test_trie;
     for(int i = 0; i < strlen(word); i++) {
-        tmp_node = tmp_node->next[map_char(word[i])];
-        CU_ASSERT_EQUAL(tmp_node->occurrencies, 0);
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
     }
-    CU_ASSERT_EQUAL(tmp_node->next[map_char('\0')]->occurrencies, 1);
+    CU_ASSERT_EQUAL(tmp_node->occurrencies, 1);
 }
 
 void test_insert_multiple_words (void) {
@@ -46,11 +45,10 @@ void test_insert_multiple_words (void) {
     }
     tmp_node = test_trie;
     for(int i = 0; i < strlen(word); i++) {
-        tmp_node = tmp_node->next[map_char(word[i])];
-        CU_ASSERT_EQUAL(tmp_node->occurrencies, 0);
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
     }
     /* 1 from the previous test + 3 of this  = 4*/
-    CU_ASSERT_EQUAL(tmp_node->next[map_char('\0')]->occurrencies, 4);
+    CU_ASSERT_EQUAL(tmp_node->occurrencies, 4);
 }
 
 void test_insert_different_words (void) {
@@ -59,20 +57,17 @@ void test_insert_different_words (void) {
     char* word = "testwordtwo";
     trie_insert(test_trie, word);
     tmp_node = test_trie;
+
     /* Tests current word with occurrency 1 */
     for(int i = 0; i < strlen(word); i++) {
-        tmp_node = tmp_node->next[map_char(word[i])];
-        CU_ASSERT_EQUAL(tmp_node->occurrencies, 0);
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
     }
-    CU_ASSERT_EQUAL(tmp_node->next[map_char('\0')]->occurrencies, 1);
+    CU_ASSERT_EQUAL(tmp_node->occurrencies, 1);
     tmp_node = test_trie;
-    /* Tests previous word to be still of occurrency 4 */
+    
+    /* Tests previous word to still be of occurrency 4 */
     for(int i = 0; i < strlen(previousword); i++) {
-        tmp_node = tmp_node->next[map_char(word[i])];
-        CU_ASSERT_EQUAL(tmp_node->occurrencies, 0);
+        CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(word[i])]);
     }
-    CU_ASSERT_EQUAL(tmp_node->next[map_char('\0')]->occurrencies, 4);
+    CU_ASSERT_EQUAL(tmp_node->occurrencies, 4);
 }
-
-
-
