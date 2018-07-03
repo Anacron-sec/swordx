@@ -50,6 +50,7 @@ void test_insert_multiple_words (void) {
     }
     /* 1 from the previous test + 3 of this  = 4*/
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 4);
+    CU_ASSERT_STRING_EQUAL(tmp_node->target_word, current_word);
 }
 
 void test_insert_different_words (void) {
@@ -64,6 +65,7 @@ void test_insert_different_words (void) {
         CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(current_word[i])]);
     }
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 1);
+    CU_ASSERT_STRING_EQUAL(tmp_node->target_word, current_word);
     tmp_node = test_trie;
     
     /* Tests previous word to still be of occurrency 4 */
@@ -71,4 +73,5 @@ void test_insert_different_words (void) {
         CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(previous_word[i])]);
     }
     CU_ASSERT_EQUAL(tmp_node->occurrencies, 4);
+    CU_ASSERT_STRING_EQUAL(tmp_node->target_word, previous_word);
 }
