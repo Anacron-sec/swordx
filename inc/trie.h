@@ -1,5 +1,5 @@
 #pragma once
-#define CHARSET 37  // 10 digits + 26 alphabet + nul
+#define CHARSET 36  // 10 digits + 26 alphabet
 
 typedef struct TrieNode {
     struct TrieNode *next[CHARSET];

@@ -16,8 +16,10 @@ void check_heap(void *obj) {
 }
 
 int map_char(char c) {
-    /* 0-9 for digits and 10-35 for alphabet 36 for nul*/
-    char lowercase_c = tolower(c);
-    if(lowercase_c == '\0') return 36;
-    return isdigit(lowercase_c) ? (lowercase_c - BASE_DIGIT) : (lowercase_c - BASE_CHAR + CHAR_OFFSET);
+    if(isdigit(c)) 
+        return (c - BASE_DIGIT);
+
+    char lowercase = tolower(c);
+
+    return islower(lowercase) ? (lowercase - BASE_CHAR + CHAR_OFFSET) : -1;
 }
