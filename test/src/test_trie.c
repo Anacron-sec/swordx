@@ -27,8 +27,10 @@ void test_create_trie (void) {
 
 void test_insert_single_word (void) {
     TrieNode* tmp_node;
+    w_stat word_status;
     char* current_word = "testword";
-    trie_insert(test_trie, current_word);
+    word_status = trie_insert(test_trie, current_word);
+    CU_ASSERT_EQUAL(word_status, W_NEW);
     tmp_node = test_trie;
     for(int i = 0; i < strlen(current_word); i++) {
         CU_ASSERT_PTR_NOT_NULL_FATAL(tmp_node = tmp_node->next[map_char(current_word[i])]);
@@ -40,9 +42,11 @@ void test_insert_single_word (void) {
 void test_insert_multiple_words (void) {
     TrieNode* tmp_node;
     char* current_word = "testword";
+    w_stat word_status;
     /* Add test word another 3 times */
     for (int i = 0; i < 3; i++) {
-        trie_insert(test_trie, current_word);
+        word_status = trie_insert(test_trie, current_word);
+        CU_ASSERT_EQUAL(word_status, W_DUP);
     }
     tmp_node = test_trie;
     for(int i = 0; i < strlen(current_word); i++) {
@@ -57,7 +61,9 @@ void test_insert_different_words (void) {
     TrieNode* tmp_node;
     char* previous_word = "testword";
     char* current_word = "testwordtwo";
-    trie_insert(test_trie, current_word);
+    w_stat word_status;
+    word_status = trie_insert(test_trie, current_word);
+    CU_ASSERT_EQUAL(word_status, W_NEW);
     tmp_node = test_trie;
 
     /* Tests current word with occurrency 1 */
