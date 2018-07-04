@@ -26,6 +26,7 @@ void test_insert_new_word (void) {
     CU_ASSERT_EQUAL(test_trie_c->counter, 1);
 }
 
+/* Repeating the same test should lead to the counter not increased as testword is the same */
 void test_insert_dup_word (void) {
     char* testword = "testword";
     trie_c_insert(test_trie_c, testword);
