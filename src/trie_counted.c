@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "trie.h"
-#include "trie_c.h"
+#include "trie_counted.h"
 #include "utils.h"
 
 TrieWithCounter *create_trie_c (void) {

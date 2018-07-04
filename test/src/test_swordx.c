@@ -3,7 +3,7 @@
 #include <CUnit/Basic.h>
 #include "test_utils.h"
 #include "test_trie.h"
-#include "test_trie_c.h"
+#include "test_trie_counted.h"
 
 int main (void) {
     CU_pSuite pSuite_utils = NULL;

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <CUnit/CUnit.h>
-#include "test_trie_c.h"
-#include "trie_c.h"
+#include "test_trie_counted.h"
+#include "trie_counted.h"
 
 TrieWithCounter* test_trie_c;
 
