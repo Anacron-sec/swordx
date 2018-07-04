@@ -1,11 +1,12 @@
 #pragma once
 #define CHARSET 36  // 10 digits + 26 alphabet
 
+/* W_DUP stands for word duplicate, W_NEW stands for word new */
 typedef enum {W_DUP, W_NEW} w_stat;
 
 typedef struct TrieNode {
     struct TrieNode *next[CHARSET];
-    unsigned int occurrences;
+    int occurrences;
     char* target_word;
 } TrieNode;
 

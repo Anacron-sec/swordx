@@ -11,6 +11,6 @@ TrieWithCounter *create_trie_c (void) {
         return trie_c;
 }
 
-void trie_c_insert(TrieWithCounter * trie_c, char * target_word){
-    if( trie_insert(trie_c->trie, target_word) == W_NEW) trie_c->counter++;
+void trie_c_insert(TrieWithCounter * trie_c, char * target_word) {
+    if(trie_insert(trie_c->trie, target_word) == W_NEW) trie_c->counter++;
 }

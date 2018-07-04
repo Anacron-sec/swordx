@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-I$(IDIR) -Wall -Werror
+CFLAGS=-I$(IDIR) -Wall -Werror -Wpedantic -flto
 
 BDIR=bin
 ODIR=obj
