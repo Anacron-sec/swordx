@@ -14,9 +14,8 @@ TrieNode *create_trie() {
     return trie;
 }
 
-w_stat trie_insert(TrieNode *trie, char* new_string) {
-    w_stat status;
-
+wordStatus trie_insert(TrieNode *trie, char* new_string) {
+    
     TrieNode *tmp_node = trie; 
     char *query_next = new_string;
     int next_position = 0;
@@ -32,12 +31,14 @@ w_stat trie_insert(TrieNode *trie, char* new_string) {
     }
 
     /* If the word is new, allocates space for the new string and stores it setti */
+    wordStatus status;
+    
     if(tmp_node->target_word == NULL) {
         tmp_node->target_word = malloc(strlen(new_string) * sizeof(char)); check_heap(tmp_node->target_word);
         strcpy(tmp_node->target_word, new_string);
-        status = W_NEW;
+        status = WORD_NEW;
     } else {
-        status = W_DUP;
+        status = WORD_DUPLICATE;
     }
 
     /* Increase occurences in every case */

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "trie.h"
-#include "trie_c.h"
+#include "trie_counted.h"
 #include "utils.h"
 
 TrieWithCounter *create_trie_c (void) {
@@ -11,7 +11,7 @@ TrieWithCounter *create_trie_c (void) {
         return trie_c;
 }
 
-void trie_c_insert(TrieWithCounter * trie_c, char * target_word){
-    unsigned long long result = trie_insert(trie_c->trie, target_word);
-    if(result == W_NEW) trie_c->counter++;
+void trie_c_insert(TrieWithCounter * trie_c, char * target_word) {
+    if(trie_insert(trie_c->trie, target_word) == WORD_NEW) 
+        trie_c->counter++;
 }

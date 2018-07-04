@@ -1,17 +1,17 @@
 CC=gcc
-CFLAGS=-I$(IDIR) -Wall -Werror
+CFLAGS= -O2 -I$(IDIR) -Wall -Werror -Wpedantic -flto
 
 BDIR=bin
 ODIR=obj
 IDIR=inc
 SDIR=src
 
-_DEPS = trie.h utils.h trie_c.h
+_DEPS = trie.h utils.h trie_counted.h occurrency_sorter.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-_OBJ = swordx.o trie.o trie_c.o utils.o
+_OBJ = swordx.o trie.o trie_counted.o utils.o occurrency_sorter.o
 
 swordx: $(OBJ)
 	$(CC) $(CFLAGS) -o $(BDIR)/$@ $^
