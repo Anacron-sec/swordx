@@ -13,7 +13,7 @@ typedef struct TrieNode {
 TrieNode *create_trie (void);
 
 /* Inserts target word into the specified trie 
-** Returns -1 if it had problems,  
+** Returns W_DUP if the word already exists, W_NEW otherwise
 */
 w_stat trie_insert(TrieNode *, char *);
 

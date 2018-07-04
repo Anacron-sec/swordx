@@ -3,10 +3,12 @@
 #include <CUnit/Basic.h>
 #include "test_utils.h"
 #include "test_trie.h"
+#include "test_trie_c.h"
 
 int main (void) {
     CU_pSuite pSuite_utils = NULL;
     CU_pSuite pSuite_trie = NULL;
+    CU_pSuite pSuite_trie_c = NULL;
 
     if (CUE_SUCCESS != CU_initialize_registry())
         return CU_get_error();
@@ -18,7 +20,13 @@ int main (void) {
     }
 
     pSuite_trie = CU_add_suite("trie_test_suite", init_suite_trie, clean_suite_trie);
-    if (NULL == pSuite_utils) {
+    if (NULL == pSuite_trie) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
+
+    pSuite_trie_c = CU_add_suite("trie_c_test_suite", init_suite_trie_c, clean_suite_trie_c);
+    if (NULL == pSuite_trie_c) {
         CU_cleanup_registry();
         return CU_get_error();
     }
@@ -31,7 +39,10 @@ int main (void) {
         (NULL == CU_add_test(pSuite_trie, "insert_trie with a single word", test_insert_single_word)) ||
         (NULL == CU_add_test(pSuite_trie, "insert_trie with multiple same words", test_insert_multiple_words))||
         (NULL == CU_add_test(pSuite_trie, "insert_trie with different words", test_insert_different_words)) ||
-        (NULL == CU_add_test(pSuite_trie, "process_words", test_process_words)))
+        (NULL == CU_add_test(pSuite_trie, "process_words", test_process_words)) ||
+        (NULL == CU_add_test(pSuite_trie_c, "create_trie counted", test_create_trie_c)) ||
+        (NULL == CU_add_test(pSuite_trie_c, "trie_c insert new word", test_insert_new_word)) ||
+        (NULL == CU_add_test(pSuite_trie_c,"trie_c insert_dup_word",test_insert_dup_word) ))
    {
       CU_cleanup_registry();
       return CU_get_error();
