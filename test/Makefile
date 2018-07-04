@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -std=c11 -Wall -Werror -Wpedantic -flto -Iinc -I../inc -lcunit
+CFLAGS= -std=c11 -O2 -Wall -Werror -Wpedantic -flto -Iinc -I../inc -lcunit
 
 MAIN_PROGRAM=../obj/swordx.o
 COMMON_O = $(filter-out $(MAIN_PROGRAM), $(wildcard ../obj/*.o))
