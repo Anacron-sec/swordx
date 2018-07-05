@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <CUnit/CUnit.h>
 #include "sorter.h"
+#include "test_sorter.h"
 
 wordWithOccurrencyPtr first;
 wordWithOccurrencyPtr second;
@@ -12,7 +13,7 @@ wordWithOccurrencyPtr words[4];
 
 
 
-int init_suite_occurrency_sorter(void) {
+int init_suite_sorter(void) {
     first = create_wordWithOccurrency("first", 2);
     second = create_wordWithOccurrency("second", 5);
     third = create_wordWithOccurrency("third", 8);
@@ -27,7 +28,7 @@ int init_suite_occurrency_sorter(void) {
     return 0;
 }
 
-int clean_suite_occurrency_sorter(void) {
+int clean_suite_sorter(void) {
     free(first);
     free(second);
     free(third);
@@ -35,7 +36,7 @@ int clean_suite_occurrency_sorter(void) {
     return 0;
 }
 
-void test_occurency_sorting(void) {
+void test_sorting(void) {
     CU_ASSERT_STRING_EQUAL(get_word(words[0]), "third");
     CU_ASSERT_EQUAL(get_occurrences(words[0]),8);
     CU_ASSERT_STRING_EQUAL(get_word(words[1]), "second");
