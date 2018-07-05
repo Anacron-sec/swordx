@@ -37,24 +37,23 @@ int clean_suite_occurrency_sorter(void) {
 
 void test_occurency_sorting(void) {
     CU_ASSERT_STRING_EQUAL(get_word(words[0]), "third");
-    CU_ASSERT_EQUAL(get_occurences(words[0]),8);
+    CU_ASSERT_EQUAL(get_occurrences(words[0]),8);
     CU_ASSERT_STRING_EQUAL(get_word(words[1]), "second");
-    CU_ASSERT_EQUAL(get_occurences(words[1]),5);
+    CU_ASSERT_EQUAL(get_occurrences(words[1]),5);
     CU_ASSERT_STRING_EQUAL(get_word(words[2]), "first");
-    CU_ASSERT_EQUAL(get_occurences(words[2]),2);
+    CU_ASSERT_EQUAL(get_occurrences(words[2]),2);
     CU_ASSERT_STRING_EQUAL(get_word(words[3]), "fourth");
-    CU_ASSERT_EQUAL(get_occurences(words[3]),9);
+    CU_ASSERT_EQUAL(get_occurrences(words[3]),9);
 
     sort_words_by_occurrency(words, length);
 
     CU_ASSERT_STRING_EQUAL(get_word(words[0]), "first");
-    CU_ASSERT_EQUAL(get_occurences(words[0]),2);
+    CU_ASSERT_EQUAL(get_occurrences(words[0]),2);
     CU_ASSERT_STRING_EQUAL(get_word(words[1]), "second");
-    CU_ASSERT_EQUAL(get_occurences(words[1]),5);
+    CU_ASSERT_EQUAL(get_occurrences(words[1]),5);
     CU_ASSERT_STRING_EQUAL(get_word(words[2]), "third");
-    CU_ASSERT_EQUAL(get_occurences(words[2]),8);
+    CU_ASSERT_EQUAL(get_occurrences(words[2]),8);
     CU_ASSERT_STRING_EQUAL(get_word(words[3]), "fourth");
-    CU_ASSERT_EQUAL(get_occurences(words[3]),9);
-
+    CU_ASSERT_EQUAL(get_occurrences(words[3]),9);
 }
 

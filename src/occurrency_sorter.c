@@ -24,7 +24,7 @@ void sort_words_by_occurrency (wordWithOccurrencyPtr words[], size_t length) {
 char* get_word(wordWithOccurrencyPtr wwoPtr) {
     return wwoPtr->word_chosen;
 }
-int get_occurences(wordWithOccurrencyPtr wwoPtr) {
+int get_occurrences(wordWithOccurrencyPtr wwoPtr) {
     return wwoPtr->occurences;
 }
 
