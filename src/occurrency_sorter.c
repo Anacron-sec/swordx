@@ -30,11 +30,11 @@ int get_occurences(wordWithOccurrencyPtr wwoPtr) {
 
 static int compare_words_by_occurrency(const void *first, const void *second) {
 
-    const wordWithOccurrencyPtr* a = first;
-    const wordWithOccurrencyPtr* b = second;
+    const wordWithOccurrencyPtr* first_word_ptr = first;
+    const wordWithOccurrencyPtr* second_word_ptr = second;
 
-    wordWithOccurrencyPtr first_word = *a;
-    wordWithOccurrencyPtr second_word = *b;
+    wordWithOccurrencyPtr first_word = *first_word_ptr;
+    wordWithOccurrencyPtr second_word = *second_word_ptr;
     
     return first_word->occurences - second_word->occurences;
 }
