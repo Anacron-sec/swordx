@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "utils.h"
-#include "occurrency_sorter.h"
+#include "sorter.h"
 
 typedef struct wordWithOccurrency {
     char* word_chosen;

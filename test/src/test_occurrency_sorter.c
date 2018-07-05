@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <CUnit/CUnit.h>
-#include "occurrency_sorter.h"
+#include "sorter.h"
 
 wordWithOccurrencyPtr first;
 wordWithOccurrencyPtr second;

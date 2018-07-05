@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 
 /* First-class ADT, wordWithOccurrency is defined in implementation */
 
