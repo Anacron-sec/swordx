@@ -2,33 +2,33 @@
 #include "utils.h"
 #include "sorter.h"
 
-typedef struct wordWithOccurrency {
+typedef struct wordWithOccurrences {
     char* word_chosen;
     int occurences;
-} wordWithOccurrency;
+} wordWithOccurrences;
 
-static int compare_words_by_occurrency(const void *, const void *);
+static int compare_words_by_occurrences(const void *, const void *);
 
-wordWithOccurrencyPtr create_wordWithOccurrency(char* word_chosen, int occurences){
-    wordWithOccurrency *wwo = (wordWithOccurrency*) malloc(sizeof(wordWithOccurrency)); check_heap(wwo);
+wordWithOccurrencesPtr create_wordWithOccurrences(char* word_chosen, int occurences){
+    wordWithOccurrences *wwo = (wordWithOccurrences*) malloc(sizeof(wordWithOccurrences)); check_heap(wwo);
     wwo->word_chosen = word_chosen;
     wwo->occurences = occurences;
 
     return wwo;
 }
 
-void sort_words_by_occurrency (wordWithOccurrencyPtr words[], size_t length) {
-    qsort(words, length, sizeof(wordWithOccurrencyPtr), compare_words_by_occurrency);
+void sort_words_by_occurrences (wordWithOccurrencesPtr words[], size_t length) {
+    qsort(words, length, sizeof(wordWithOccurrencesPtr), compare_words_by_occurrences);
 }
 
-char* get_word(wordWithOccurrencyPtr wwoPtr) {
+char* get_word(wordWithOccurrencesPtr wwoPtr) {
     return wwoPtr->word_chosen;
 }
-int get_occurrences(wordWithOccurrencyPtr wwoPtr) {
+int get_occurrences(wordWithOccurrencesPtr wwoPtr) {
     return wwoPtr->occurences;
 }
 
-static int compare_words_by_occurrency(const void *first_word, const void *second_word) {
+static int compare_words_by_occurrences(const void *first_word, const void *second_word) {
     // Qsort will implicitly pass arguments as pointers so we have to convert to a pointer and deference
-    return (*((const wordWithOccurrencyPtr*)first_word))->occurences - (*((const wordWithOccurrencyPtr*)second_word))->occurences;
+    return (*((const wordWithOccurrencesPtr*)first_word))->occurences - (*((const wordWithOccurrencesPtr*)second_word))->occurences;
 }

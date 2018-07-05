@@ -3,21 +3,21 @@
 #include "sorter.h"
 #include "test_sorter.h"
 
-wordWithOccurrencyPtr first;
-wordWithOccurrencyPtr second;
-wordWithOccurrencyPtr third;
-wordWithOccurrencyPtr fourth;
+wordWithOccurrencesPtr first;
+wordWithOccurrencesPtr second;
+wordWithOccurrencesPtr third;
+wordWithOccurrencesPtr fourth;
 
 size_t length = 4;
-wordWithOccurrencyPtr words[4];
+wordWithOccurrencesPtr words[4];
 
 
 
 int init_suite_sorter(void) {
-    first = create_wordWithOccurrency("first", 2);
-    second = create_wordWithOccurrency("second", 5);
-    third = create_wordWithOccurrency("third", 8);
-    fourth = create_wordWithOccurrency("fourth", 9);
+    first = create_wordWithOccurrences("first", 2);
+    second = create_wordWithOccurrences("second", 5);
+    third = create_wordWithOccurrences("third", 8);
+    fourth = create_wordWithOccurrences("fourth", 9);
     
     words[0] = third;
     words[1] = second;
@@ -46,7 +46,7 @@ void test_sorting(void) {
     CU_ASSERT_STRING_EQUAL(get_word(words[3]), "fourth");
     CU_ASSERT_EQUAL(get_occurrences(words[3]),9);
 
-    sort_words_by_occurrency(words, length);
+    sort_words_by_occurrences(words, length);
 
     CU_ASSERT_STRING_EQUAL(get_word(words[0]), "first");
     CU_ASSERT_EQUAL(get_occurrences(words[0]),2);
