@@ -28,13 +28,13 @@ int get_occurrences(wordWithOccurrencyPtr wwoPtr) {
     return wwoPtr->occurences;
 }
 
-static int compare_words_by_occurrency(const void *first, const void *second) {
+static int compare_words_by_occurrency(const void *first_word, const void *second_word) {
 
-    const wordWithOccurrencyPtr* first_word_ptr = first;
-    const wordWithOccurrencyPtr* second_word_ptr = second;
+    const wordWithOccurrencyPtr* first_word_ptr = first_word;
+    const wordWithOccurrencyPtr* second_word_ptr = second_word;
 
-    wordWithOccurrencyPtr first_word = *first_word_ptr;
-    wordWithOccurrencyPtr second_word = *second_word_ptr;
+    wordWithOccurrencyPtr word1 = *first_word_ptr;
+    wordWithOccurrencyPtr word2 = *second_word_ptr;
     
-    return first_word->occurences - second_word->occurences;
+    return word1->occurences - word2->occurences;
 }
