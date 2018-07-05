@@ -2,7 +2,7 @@
 #include "trie.h"
 
 typedef struct TrieWithCounter {
-    TrieNode *trie;
+    TrieNodePtr trie;
     unsigned long long counter;
 } TrieWithCounter;
 

@@ -45,10 +45,8 @@ int main (void) {
         (NULL == CU_add_test(pSuite_utils, "map_char with uppercase letters", test_map_char_uppercase)) ||
         (NULL == CU_add_test(pSuite_utils, "map_char with invalid char", test_map_char_invalid)) ||
         (NULL == CU_add_test(pSuite_trie, "create_trie", test_create_trie)) ||
-        (NULL == CU_add_test(pSuite_trie, "insert_trie with a single word", test_insert_single_word)) ||
-        (NULL == CU_add_test(pSuite_trie, "insert_trie with multiple same words", test_insert_multiple_words))||
-        (NULL == CU_add_test(pSuite_trie, "insert_trie with different words", test_insert_different_words)) ||
-        (NULL == CU_add_test(pSuite_trie, "process_words", test_process_words)) ||
+        (NULL == CU_add_test(pSuite_trie, "insert_trie with various cases", test_insert_word)) ||
+        (NULL == CU_add_test(pSuite_trie, "process function", test_process_function)) ||
         (NULL == CU_add_test(pSuite_trie_c, "create_trie counted", test_create_trie_c)) ||
         (NULL == CU_add_test(pSuite_trie_c, "trie_c insert new word", test_insert_new_word)) ||
         (NULL == CU_add_test(pSuite_trie_c,"trie_c insert_dup_word",test_insert_dup_word)) ||
