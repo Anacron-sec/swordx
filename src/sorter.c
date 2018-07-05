@@ -29,6 +29,6 @@ int get_occurrences(wordWithOccurrencesPtr wwoPtr) {
 }
 
 static int compare_words_by_occurrences(const void *first_word, const void *second_word) {
-    // Qsort will implicitly pass arguments as pointers so we have to convert to a pointer and deference
+    // Qsort will implicitly pass arguments as pointers so we have to cast to a pointer and deference.
     return (*((const wordWithOccurrencesPtr*)first_word))->occurences - (*((const wordWithOccurrencesPtr*)second_word))->occurences;
 }
