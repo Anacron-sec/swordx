@@ -2,15 +2,15 @@
 #include "utils.h"
 #include "sorter.h"
 
-typedef struct wordWithOccurrences {
+struct wordWithOccurrences {
     char* word_chosen;
     int occurences;
-} wordWithOccurrences;
+};
 
 static int compare_words_by_occurrences(const void *, const void *);
 
 wordWithOccurrencesPtr create_wordWithOccurrences(char* word_chosen, int occurences){
-    wordWithOccurrences *wwo = (wordWithOccurrences*) malloc(sizeof(wordWithOccurrences)); check_heap(wwo);
+    wordWithOccurrencesPtr wwo = (wordWithOccurrencesPtr) malloc(sizeof(struct wordWithOccurrences)); check_heap(wwo);
     wwo->word_chosen = word_chosen;
     wwo->occurences = occurences;
 
