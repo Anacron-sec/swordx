@@ -2,13 +2,13 @@
 #include <CUnit/CUnit.h>
 #include "occurrency_sorter.h"
 
-wordWithOccurrency* first;
-wordWithOccurrency* second;
-wordWithOccurrency* third;
-wordWithOccurrency* fourth;
+wordWithOccurrencyPtr first;
+wordWithOccurrencyPtr second;
+wordWithOccurrencyPtr third;
+wordWithOccurrencyPtr fourth;
 
 size_t length = 4;
-wordWithOccurrency words[4];
+wordWithOccurrencyPtr words[4];
 
 
 
@@ -18,10 +18,10 @@ int init_suite_occurrency_sorter(void) {
     third = create_wordWithOccurrency("third", 8);
     fourth = create_wordWithOccurrency("fourth", 9);
     
-    words[0] = *third;
-    words[1] = *second;
-    words[2] = *first;
-    words[3] = *fourth;
+    words[0] = third;
+    words[1] = second;
+    words[2] = first;
+    words[3] = fourth;
 
 
     return 0;
@@ -36,17 +36,17 @@ int clean_suite_occurrency_sorter(void) {
 }
 
 void test_occurency_sorting(void) {
-    CU_ASSERT_STRING_EQUAL(words[0].word_chosen, "third");
-    CU_ASSERT_STRING_EQUAL(words[1].word_chosen, "second");
-    CU_ASSERT_STRING_EQUAL(words[2].word_chosen, "first");
-    CU_ASSERT_STRING_EQUAL(words[3].word_chosen, "fourth");
+    CU_ASSERT_STRING_EQUAL(get_word(words[0]), "third");
+    CU_ASSERT_STRING_EQUAL(get_word(words[1]), "second");
+    CU_ASSERT_STRING_EQUAL(get_word(words[2]), "first");
+    CU_ASSERT_STRING_EQUAL(get_word(words[3]), "fourth");
 
     sort_words_by_occurrency(words, length);
 
-    CU_ASSERT_STRING_EQUAL(words[0].word_chosen, "first");
-    CU_ASSERT_STRING_EQUAL(words[1].word_chosen, "second");
-    CU_ASSERT_STRING_EQUAL(words[2].word_chosen, "third");
-    CU_ASSERT_STRING_EQUAL(words[3].word_chosen, "fourth");
+    CU_ASSERT_STRING_EQUAL(get_word(words[0]), "first");
+    CU_ASSERT_STRING_EQUAL(get_word(words[1]), "second");
+    CU_ASSERT_STRING_EQUAL(get_word(words[2]), "third");
+    CU_ASSERT_STRING_EQUAL(get_word(words[3]), "fourth");
 
 }
 

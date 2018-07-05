@@ -1,10 +1,10 @@
 #pragma once
 
-typedef struct wordWithOccurrency {
-    char* word_chosen;
-    int occurences;
-} wordWithOccurrency;
+typedef struct wordWithOccurrency* wordWithOccurrencyPtr;
 
-wordWithOccurrency* create_wordWithOccurrency(char*, int);
+wordWithOccurrencyPtr create_wordWithOccurrency(char*, int);
 
-void sort_words_by_occurrency(wordWithOccurrency[], size_t);
+void sort_words_by_occurrency(wordWithOccurrencyPtr[], size_t);
+
+char* get_word(wordWithOccurrencyPtr);
+int get_occurences(wordWithOccurrencyPtr);
