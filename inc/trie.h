@@ -9,7 +9,7 @@ typedef struct TrieNode* TrieNodePtr;
 TrieNodePtr create_trie (void);
 
 /* Inserts target word into the specified trie 
-** Returns W_DUP if the word already exists, W_NEW otherwise
+** Returns WORD_DUPLICATE if the word already exists, WORD_NEW otherwise
 */
 wordStatus trie_insert(TrieNodePtr, char *);
 

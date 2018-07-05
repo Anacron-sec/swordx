@@ -7,7 +7,7 @@ typedef struct TrieWithCounter {
 } TrieWithCounter;
 
 /* Initializes a trie and returns a pointer to the new structure */
-TrieWithCounter *create_trie_c (void);
+TrieWithCounter* create_trie_c (void);
 
 /* Inserts target word into the specified trie 
 ** Increases counter if the word is new.

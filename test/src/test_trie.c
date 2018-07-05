@@ -38,7 +38,7 @@ void test_insert_word (void) {
 static char words[2][500];
 static int occs[2];
 
-static void process_words(char* wordFound, int occ ) {
+static void process_words(char* wordFound, int occ) {
     static int i = 0;
     strcpy(words[i], wordFound);
     occs[i] = occ;
