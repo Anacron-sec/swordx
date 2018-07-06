@@ -5,8 +5,3 @@
 ** If allocation failed exits with failure the program printing an error. 
 **/
 void check_heap(void *);
-
-/*
-**  Returns -1 if not mappable, 0-9 for digits and 10-35 for alpha 
-**/
-int map_char(char);

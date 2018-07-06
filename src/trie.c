@@ -1,10 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <string.h>
 #include "trie.h"
 #include "utils.h"
 
-#define CHARSET 36  // 10 digits + 26 alphabet
+#define CHARSET 36 // 10 digits + 26 alphabets
+
+static const char BASE_DIGIT = '0';
+static const char BASE_CHAR = 'a';
+static const int CHAR_OFFSET = 10;
 
 struct TrieNode {
     struct TrieNode *next[CHARSET];
@@ -12,6 +17,7 @@ struct TrieNode {
     char* target_word;
 };
 
+static int map_char(char c);
 static void init_node(TrieNodePtr);
 static void attach_new_node(TrieNodePtr, short);
 
@@ -77,4 +83,13 @@ static void attach_new_node(TrieNodePtr node, short position) {
     struct TrieNode *new_node = (TrieNodePtr) malloc(sizeof(struct TrieNode)); check_heap(new_node);
     init_node(new_node);
     node->next[position] = new_node;
+}
+
+static int map_char(char c) {
+    if(isdigit(c)) 
+        return (c - BASE_DIGIT);
+
+    char lowercase = tolower(c);
+
+    return islower(lowercase) ? (lowercase - BASE_CHAR + CHAR_OFFSET) : -1;
 }
