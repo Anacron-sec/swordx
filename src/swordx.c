@@ -1,9 +1,18 @@
 #include <stdlib.h>
 #include <argp.h>
+#include <argz.h>
 #include "utils.h"
 
+const char *argp_program_bug_address = "michelebiondi01@gmail.com";
+const char *argp_program_version = "version 0.0.0";
+
+struct arguments {
+    char *argz;
+    size_t argz_len;
+};
+
 static int parse_opt(int key, char *arg, struct argp_state *state) {
-    int *arg_count = state->input;
+    struct arguments *a = state->input;
     switch(key) {
         case 'r': printf("recursive\n"); break;
         case 'f': printf("follow\n"); break;
@@ -18,13 +27,17 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case 'o': printf("Output file --> %s\n", arg); break;
                                                                                                                                                                                                                                                                                                                                                                          case 1337: pirate(); break;
         case ARGP_KEY_ARG: {
-            (*arg_count)++;
+            argz_add (&a->argz, &a->argz_len, arg);
             printf("Called with: %s \n", arg);
-            //TODO Regex input
+        } break;
+        case ARGP_KEY_INIT: {
+            a->argz = 0;
+            a->argz_len = 0;
         } break;
         case ARGP_KEY_END:
         {
-            if (*arg_count <= 0) 
+            size_t arg_count = argz_count(a->argz, a->argz_len);
+            if (arg_count <= 0) 
                 argp_failure(state, 1, 0, "Expected at least one file to process, use --help for more info.");
         } break;
     }
@@ -46,10 +59,20 @@ int main(int argc, char **argv)
         {0}
     };
 
-    int arg_count = 0;
     struct argp argp = {
-        options, parse_opt, "<input1> <input2> … <inputn>"
+        options, parse_opt, "<input1> <input2> … <inputn>", 
+        "Counts the number of word occurences in files"
     };
-    return argp_parse (&argp, argc, argv, 0, 0, &arg_count); 
+    struct arguments arguments;
+    if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
+        const char *prev = NULL;
+        char *word;
+        while ((word = argz_next (arguments.argz, arguments.argz_len, prev))) {
+            printf (" %s", word);
+            prev = word;
+        }
+        printf ("\n");
+        free (arguments.argz);
+    } 
     exit(EXIT_SUCCESS);
 }
