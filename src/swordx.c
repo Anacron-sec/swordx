@@ -28,7 +28,6 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
                                                                                                                                                                                                                                                                                                                                                                          case 1337: pirate(); break;
         case ARGP_KEY_ARG: {
             argz_add (&a->argz, &a->argz_len, arg);
-            printf("Called with: %s \n", arg);
         } break;
         case ARGP_KEY_INIT: {
             a->argz = 0;
@@ -66,10 +65,10 @@ int main(int argc, char **argv)
     struct arguments arguments;
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
         const char *prev = NULL;
-        char *word;
-        while ((word = argz_next (arguments.argz, arguments.argz_len, prev))) {
-            printf (" %s", word);
-            prev = word;
+        char *argument;
+        while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
+            printf ("Called with %s\n", argument);
+            prev = argument;
         }
         printf ("\n");
         free (arguments.argz);
