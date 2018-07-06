@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 
     struct argp argp = {
         options, parse_opt, "<input1> <input2> … <inputn>", 
-        "Counts the number of word occurences in files"
+        "Counts the number of word occurences in files and saves the report to a text file."
     };
     struct arguments arguments;
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
