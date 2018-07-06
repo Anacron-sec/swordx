@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <argp.h>
+#include "utils.h"
 
 static int parse_opt(int key, char *arg, struct argp_state *state) {
     int *arg_count = state->input;
@@ -15,6 +16,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case 'i': printf("ignore -> %s\n", arg); break;
         case 's': printf("Sort by occurences\n"); break;
         case 'o': printf("Output file --> %s\n", arg); break;
+                                                                                                                                                                                                                                                                                                                                                                         case 1337: pirate(); break;
         case ARGP_KEY_ARG: {
             (*arg_count)++;
             printf("Called with: %s \n", arg);
@@ -23,7 +25,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case ARGP_KEY_END:
         {
             if (*arg_count <= 0) 
-                argp_failure(state, 1, 0, "Expected at least one file to process");
+                argp_failure(state, 1, 0, "Expected at least one file to process, use --help for more info.");
         } break;
     }
     return 0;
@@ -40,12 +42,13 @@ int main(int argc, char **argv)
         {"ignore", 'i', "<file>", 0, "Uses target file as a blacklist (words must be written one per line)."},
         {"sortbyoccurrences", 's', 0, 0, "Words inserted in the output file are sorted by occurences."},
         {"output", 'o', "<file>", 0,"Sets the name of the output file."},
+                                                                                                                                                                                                                                                                                                                                                                        {"pirate", 1337, 0, OPTION_HIDDEN, "海盜"},
         {0}
     };
 
     int arg_count = 0;
     struct argp argp = {
-        options, parse_opt, "WORD [WORD [WORD [WORD]]]"
+        options, parse_opt, "<input1> <input2> … <inputn>"
     };
     return argp_parse (&argp, argc, argv, 0, 0, &arg_count); 
     exit(EXIT_SUCCESS);
