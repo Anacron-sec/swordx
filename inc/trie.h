@@ -1,22 +1,18 @@
 #pragma once
-#define CHARSET 36  // 10 digits + 26 alphabet
 
 /* W_DUP stands for word duplicate, W_NEW stands for word new */
-typedef enum {WORD_DUPLICATE, WORD_NEW} wordStatus;
+typedef enum {WORD_NEW, WORD_DUPLICATE} wordStatus;
 
-typedef struct TrieNode {
-    struct TrieNode *next[CHARSET];
-    int occurrences;
-    char* target_word;
-} TrieNode;
+/* First-class ADT, TrieNode is defined in implementation */
+typedef struct TrieNode* TrieNodePtr;
 
 /* Initializes a trie and returns a pointer to the new structure */
-TrieNode *create_trie (void);
+TrieNodePtr create_trie (void);
 
 /* Inserts target word into the specified trie 
-** Returns W_DUP if the word already exists, W_NEW otherwise
+** Returns WORD_DUPLICATE if the word already exists, WORD_NEW otherwise
 */
-wordStatus trie_insert(TrieNode *, char *);
+wordStatus trie_insert(TrieNodePtr, char *);
 
 /* callback is a user defined function that's called at every word*/
-void trie_process_words (TrieNode*, void (*)(char*, int));
+void trie_process_words (TrieNodePtr, void (*)(char*, int));

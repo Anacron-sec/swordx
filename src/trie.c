@@ -4,19 +4,27 @@
 #include "trie.h"
 #include "utils.h"
 
-static void init_node(TrieNode*);
-static void attach_new_node(TrieNode*, short);
+#define CHARSET 36  // 10 digits + 26 alphabet
 
-TrieNode *create_trie() {
-    TrieNode *trie = (TrieNode*) malloc(sizeof(TrieNode)); check_heap(trie);
+struct TrieNode {
+    struct TrieNode *next[CHARSET];
+    int occurrences;
+    char* target_word;
+};
+
+static void init_node(TrieNodePtr);
+static void attach_new_node(TrieNodePtr, short);
+
+TrieNodePtr create_trie() {
+    TrieNodePtr trie = (TrieNodePtr) malloc(sizeof(struct TrieNode)); check_heap(trie);
     init_node(trie);
 
     return trie;
 }
 
-wordStatus trie_insert(TrieNode *trie, char* new_string) {
+wordStatus trie_insert(TrieNodePtr trie, char* new_string) {
     
-    TrieNode *tmp_node = trie; 
+    struct TrieNode *tmp_node = trie; 
     char *query_next = new_string;
     int next_position = 0;
 
@@ -46,16 +54,18 @@ wordStatus trie_insert(TrieNode *trie, char* new_string) {
     return status;
 }
 
-void trie_process_words (TrieNode* node, void (*process_function)(char*, int)) {
-    if(node->occurrences > 0)
+void trie_process_words (TrieNodePtr node, void (*process_function)(char*, int)) {    
+    if(node->occurrences > 0){
         process_function(node->target_word, node->occurrences);
+    }
+
     for(int i = 0; i < CHARSET; i++) {
         if(node->next[i] != NULL)
             trie_process_words(node->next[i], process_function);
     }
 }
 
-static void init_node(TrieNode* node) {
+static void init_node(TrieNodePtr node) {
     node->occurrences = 0;
     node->target_word = NULL;
     for(int i = 0; i < CHARSET; i++){
@@ -63,8 +73,8 @@ static void init_node(TrieNode* node) {
     }
 }
 
-static void attach_new_node(TrieNode* node, short position) {
-    TrieNode *new_node = (TrieNode*) malloc(sizeof(TrieNode)); check_heap(new_node);
+static void attach_new_node(TrieNodePtr node, short position) {
+    struct TrieNode *new_node = (TrieNodePtr) malloc(sizeof(struct TrieNode)); check_heap(new_node);
     init_node(new_node);
     node->next[position] = new_node;
 }
