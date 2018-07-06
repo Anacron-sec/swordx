@@ -1,8 +1,9 @@
 #pragma once
 
 /* W_DUP stands for word duplicate, W_NEW stands for word new */
-typedef enum {WORD_DUPLICATE, WORD_NEW} wordStatus;
+typedef enum {WORD_NEW, WORD_DUPLICATE} wordStatus;
 
+/* First-class ADT, TrieNode is defined in implementation */
 typedef struct TrieNode* TrieNodePtr;
 
 /* Initializes a trie and returns a pointer to the new structure */
