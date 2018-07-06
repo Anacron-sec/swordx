@@ -26,18 +26,19 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case 's': printf("Sort by occurences\n"); break;
         case 'o': printf("Output file --> %s\n", arg); break;
                                                                                                                                                                                                                                                                                                                                                                          case 1337: pirate(); break;
-        case ARGP_KEY_ARG: {
-            argz_add (&a->argz, &a->argz_len, arg);
-        } break;
+        /* Main arguments */
         case ARGP_KEY_INIT: {
             a->argz = 0;
             a->argz_len = 0;
+        } break;
+        case ARGP_KEY_ARG: {
+            argz_add (&a->argz, &a->argz_len, arg);
         } break;
         case ARGP_KEY_END:
         {
             size_t arg_count = argz_count(a->argz, a->argz_len);
             if (arg_count <= 0) 
-                argp_failure(state, 1, 0, "Expected at least one file to process, use --help for more info.");
+                argp_failure(state, 1, 0, "Expected at least one file to process. Use --help for more info.");
         } break;
     }
     return 0;
@@ -68,7 +69,7 @@ int main(int argc, char **argv)
 
     struct argp argp = {
         options, parse_opt, "<input1> <input2> … <inputn>", 
-        "Counts the number of word occurences in files and saves the report to a text file."
+        "Counts the number of word occurences in the specified files and saves the report to a text file."
     };
     struct arguments arguments;
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
@@ -79,8 +80,8 @@ int main(int argc, char **argv)
             printf ("Called with %s\n", argument);
             prev = argument;
         }
-        printf ("\n");
+
         free (arguments.argz);
-    } 
+    }
     exit(EXIT_SUCCESS);
 }
