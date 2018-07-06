@@ -16,6 +16,12 @@ TrieWithCounterPtr create_trie_c (void) {
         return trie_c;
 }
 
+void destroy_trie_c (TrieWithCounterPtr trie_c_ptr) {
+        destroy_trie(trie_c_ptr->trie);
+        free(trie_c_ptr);
+}
+
+
 void trie_c_insert(TrieWithCounterPtr trie_c, char * target_word) {
     if(trie_insert(trie_c->trie, target_word) == WORD_NEW) 
         trie_c->counter++;
