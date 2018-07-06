@@ -28,6 +28,14 @@ TrieNodePtr create_trie() {
     return trie;
 }
 
+void destroy_trie(TrieNodePtr trie) {
+    for(int i = 0; i < CHARSET; i++) {
+        if(trie->next[i] != NULL)
+            destroy_trie(trie->next[i]);
+    }
+    free(trie);
+}
+
 wordStatus trie_insert(TrieNodePtr trie, char* new_string) {
     
     struct TrieNode *tmp_node = trie; 

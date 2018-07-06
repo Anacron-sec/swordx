@@ -9,6 +9,9 @@ typedef struct TrieNode* TrieNodePtr;
 /* Initializes a trie and returns a pointer to the new structure */
 TrieNodePtr create_trie (void);
 
+/* Frees up memory */
+void destroy_trie(TrieNodePtr);
+
 /* Inserts target word into the specified trie 
 ** Returns WORD_DUPLICATE if the word already exists, WORD_NEW otherwise
 */

@@ -11,7 +11,7 @@ int init_suite_trie_c(void) {
 }
 
 int clean_suite_trie_c(void) { 
-    free(test_trie_c);
+    destroy_trie_c(test_trie_c);
     return 0;
 }
 

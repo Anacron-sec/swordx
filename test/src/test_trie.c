@@ -13,7 +13,7 @@ int init_suite_trie(void) {
 }
 
 int clean_suite_trie(void) { 
-    free(test_trie);
+    destroy_trie(test_trie);
     return 0;
 }
 

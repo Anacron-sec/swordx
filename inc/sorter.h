@@ -11,6 +11,11 @@ typedef struct wordWithOccurrences* wordWithOccurrencesPtr;
 wordWithOccurrencesPtr create_wordWithOccurrences(char*, int);
 
 /*
+** Frees up memory
+*/
+void destroy_wordWithOccurrences(wordWithOccurrencesPtr);
+
+/*
 ** Sorts an array of pointers to wordWithOccurrencesPtr
 ** size_t is the size of the array
 */

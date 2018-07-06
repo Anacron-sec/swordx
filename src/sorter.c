@@ -17,6 +17,10 @@ wordWithOccurrencesPtr create_wordWithOccurrences(char* word_chosen, int occuren
     return wwo;
 }
 
+void destroy_wordWithOccurrences(wordWithOccurrencesPtr wwoPtr) {
+    free(wwoPtr);
+}
+
 void sort_words_by_occurrences (wordWithOccurrencesPtr words[], size_t length) {
     qsort(words, length, sizeof(wordWithOccurrencesPtr), compare_words_by_occurrences);
 }
