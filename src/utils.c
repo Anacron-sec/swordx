@@ -266,7 +266,7 @@ printf("                     :R(h x*              \"h..*dN.\n");
 printf("                   u@NM5e#>                 7?dMRMh.\n");
 printf("                 z$@M@$#\"#\"                 *\"\"*@MM$hL\n");
 printf("               u@@MM8*          SwordX          \"*$M@Mh.\n");
-printf("             z$RRM8F\"         by an4cr0n          \"N8@M$bL\n");
+printf("             z$RRM8F\"                             \"N8@M$bL\n");
 printf("            5`RM$#                                  'R88f)R\n");
 printf("            'h.$\"                                     #$x*\n\n\n");
 }

@@ -46,15 +46,23 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
 int main(int argc, char **argv)
 {
     struct argp_option options[] = {
+        { 0, 0, 0, 0, "Files and folders options:", 1},
         {"recursive", 'r', 0, 0, "Follows subdirectories during file processing."},
         {"follow", 'f', 0, 0, "Follows links inside directories."},
         {"exclude", 'e', "<file>", 0, "The specified file is not used for processing."},
+
+        { 0, 0, 0, 0, "Words options:", 2},
         {"alpha", 'a', 0, 0, "Treats only words with alphabet characters."},
         {"min", 'm', "<num>", 0, "Only words with a minimum length of <num> are processed."},
         {"ignore", 'i', "<file>", 0, "Uses target file as a blacklist (words must be written one per line)."},
         {"sortbyoccurrences", 's', 0, 0, "Words inserted in the output file are sorted by occurences."},
+
+        { 0, 0, 0, 0, "Output Options:", 3},
         {"output", 'o', "<file>", 0,"Sets the name of the output file."},
+
                                                                                                                                                                                                                                                                                                                                                                         {"pirate", 1337, 0, OPTION_HIDDEN, "海盜"},
+        
+        { 0, 0, 0, 0, "Informational Options:", -1},
         {0}
     };
 
