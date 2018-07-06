@@ -19,9 +19,15 @@ swordx: $(OBJ)
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-.PHONY: clean all test
+.PHONY: clean all test install uninstall
 
 all: swordx
+
+install:
+	cp ./bin/swordx /usr/local/bin/swordx
+
+uninstall:
+	rm -f /usr/local/bin/swordx
 
 test:
 	make && make -C test && test/bin/test_swordx
