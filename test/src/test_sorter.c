@@ -29,10 +29,11 @@ int init_suite_sorter(void) {
 }
 
 int clean_suite_sorter(void) {
-    free(first);
-    free(second);
-    free(third);
-    free(fourth);
+    destroy_wordWithOccurrences(first);
+    destroy_wordWithOccurrences(first);
+    destroy_wordWithOccurrences(second);
+    destroy_wordWithOccurrences(third);
+    destroy_wordWithOccurrences(fourth);
     return 0;
 }
 
