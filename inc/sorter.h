@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 /* First-class ADT, wordWithOccurrences is defined in implementation */
-
 typedef struct wordWithOccurrences* wordWithOccurrencesPtr;
 
 /* Create a new wordWithOccurrences Structure 

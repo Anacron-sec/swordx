@@ -3,7 +3,7 @@
 #include "test_trie_counted.h"
 #include "trie_counted.h"
 
-TrieWithCounter* test_trie_c;
+TrieWithCounterPtr test_trie_c;
 
 int init_suite_trie_c(void) {
     test_trie_c = create_trie_c();
@@ -16,21 +16,21 @@ int clean_suite_trie_c(void) {
 }
 
 void test_create_trie_c (void) {
-    CU_ASSERT_PTR_NOT_NULL_FATAL(test_trie_c->trie);
-    CU_ASSERT_EQUAL(test_trie_c->counter, 0);
+    CU_ASSERT_PTR_NOT_NULL_FATAL(get_trie(test_trie_c));
+    CU_ASSERT_EQUAL(get_count(test_trie_c), 0);
 }
 
 void test_insert_new_word (void) {
     char* testword = "testword";
     trie_c_insert(test_trie_c, testword);
-    CU_ASSERT_EQUAL(test_trie_c->counter, 1);
+    CU_ASSERT_EQUAL(get_count(test_trie_c), 1);
 }
 
 /* Repeating the same test should lead to the counter not increased as testword is the same */
 void test_insert_dup_word (void) {
     char* testword = "testword";
     trie_c_insert(test_trie_c, testword);
-    CU_ASSERT_EQUAL(test_trie_c->counter, 1);
+    CU_ASSERT_EQUAL(get_count(test_trie_c), 1);
 }
 
 
