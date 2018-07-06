@@ -75,6 +75,7 @@ int main(int argc, char **argv)
         const char *prev = NULL;
         char *argument;
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
+            //TODO Regexp interpreter
             printf ("Called with %s\n", argument);
             prev = argument;
         }
