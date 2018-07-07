@@ -5,7 +5,7 @@
 #include "trie.h"
 #include "utils.h"
 
-TrieNodePtr test_trie;
+TriePtr test_trie;
 
 int init_suite_trie(void) {
     test_trie = create_trie();
@@ -21,6 +21,20 @@ void test_create_trie (void) {
     CU_ASSERT_PTR_NOT_NULL(test_trie);
 }
 
+void test_get_count(void) {
+    trie_insert(test_trie, "one");
+    
+    for(int i = 0; i < 5; i++) {
+        trie_insert(test_trie, "two");
+    }
+
+    trie_insert(test_trie, "three");
+    trie_insert(test_trie, "three");
+
+    CU_ASSERT_EQUAL(get_count(test_trie), 3);
+}
+
+/*
 void test_insert_word (void) {
     char *wordToInsert = "wordtwo";
     wordStatus ws = trie_insert(test_trie, wordToInsert);
@@ -34,21 +48,4 @@ void test_insert_word (void) {
     ws = trie_insert(test_trie, newWord);
     CU_ASSERT_EQUAL(ws, WORD_NEW);
 }
-
-static char words[2][500];
-static int occs[2];
-
-static void process_words(char* wordFound, int occ) {
-    static int i = 0;
-    strcpy(words[i], wordFound);
-    occs[i] = occ;
-    i++;
-}
-
-void test_process_function (void) {
-    trie_process_words(test_trie, process_words);
-    CU_ASSERT_STRING_EQUAL(words[0], "wordone");
-    CU_ASSERT_STRING_EQUAL(words[1], "wordtwo");
-    CU_ASSERT_EQUAL(occs[0], 1);
-    CU_ASSERT_EQUAL(occs[1], 2);
-}
+*/

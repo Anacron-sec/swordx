@@ -11,34 +11,43 @@ static const char BASE_DIGIT = '0';
 static const char BASE_CHAR = 'a';
 static const int CHAR_OFFSET = 10;
 
+
 struct TrieNode {
     struct TrieNode *next[CHARSET];
     int occurrences;
     char* target_word;
 };
 
-static int map_char(char c);
-static void init_node(TrieNodePtr);
-static void attach_new_node(TrieNodePtr, short);
+struct Trie {
+    struct TrieNode *root_node;
+    size_t num_words;
+};
 
-TrieNodePtr create_trie() {
-    TrieNodePtr trie = (TrieNodePtr) malloc(sizeof(struct TrieNode)); check_heap(trie);
-    init_node(trie);
+static int map_char(char c);
+static void init_node(struct TrieNode*);
+static void attach_new_node(struct TrieNode*, short);
+static void destroy_trie_nodes(struct TrieNode*);
+
+TriePtr create_trie() {
+    TriePtr trie = (TriePtr) malloc(sizeof(struct Trie)); check_heap(trie);
+
+    struct TrieNode* node = (struct TrieNode*) malloc(sizeof(struct TrieNode)); check_heap(node);
+    init_node(node);
+
+    trie->root_node = node;
+    trie->num_words = 0;
 
     return trie;
 }
 
-void destroy_trie(TrieNodePtr trie) {
-    for(int i = 0; i < CHARSET; i++) {
-        if(trie->next[i] != NULL)
-            destroy_trie(trie->next[i]);
-    }
+void destroy_trie(TriePtr trie) {
+    destroy_trie_nodes(trie->root_node);
     free(trie);
 }
 
-wordStatus trie_insert(TrieNodePtr trie, char* new_string) {
+void trie_insert(TriePtr trie, char* new_string) {
     
-    struct TrieNode *tmp_node = trie; 
+    struct TrieNode *tmp_node = trie->root_node; 
     char *query_next = new_string;
     int next_position = 0;
 
@@ -51,35 +60,22 @@ wordStatus trie_insert(TrieNodePtr trie, char* new_string) {
         tmp_node = tmp_node->next[next_position];
         query_next++;
     }
-
-    /* If the word is new, allocates space for the new string and stores it setti */
-    wordStatus status;
     
     if(tmp_node->target_word == NULL) {
         tmp_node->target_word = malloc(strlen(new_string) * sizeof(char)); check_heap(tmp_node->target_word);
         strcpy(tmp_node->target_word, new_string);
-        status = WORD_NEW;
-    } else {
-        status = WORD_DUPLICATE;
+        trie->num_words++;
     }
 
     /* Increase occurences in every case */
     tmp_node->occurrences++;
-    return status;
 }
 
-void trie_process_words (TrieNodePtr node, void (*process_function)(char*, int)) {    
-    if(node->occurrences > 0){
-        process_function(node->target_word, node->occurrences);
-    }
-
-    for(int i = 0; i < CHARSET; i++) {
-        if(node->next[i] != NULL)
-            trie_process_words(node->next[i], process_function);
-    }
+size_t get_count(TriePtr trie) {
+    return trie->num_words;
 }
 
-static void init_node(TrieNodePtr node) {
+static void init_node(struct TrieNode* node) {
     node->occurrences = 0;
     node->target_word = NULL;
     for(int i = 0; i < CHARSET; i++){
@@ -87,8 +83,8 @@ static void init_node(TrieNodePtr node) {
     }
 }
 
-static void attach_new_node(TrieNodePtr node, short position) {
-    struct TrieNode *new_node = (TrieNodePtr) malloc(sizeof(struct TrieNode)); check_heap(new_node);
+static void attach_new_node(struct TrieNode* node, short position) {
+    struct TrieNode *new_node = (struct TrieNode*) malloc(sizeof(struct TrieNode)); check_heap(new_node);
     init_node(new_node);
     node->next[position] = new_node;
 }
@@ -100,4 +96,13 @@ static int map_char(char c) {
     char lowercase = tolower(c);
 
     return islower(lowercase) ? (lowercase - BASE_CHAR + CHAR_OFFSET) : -1;
+}
+
+static void destroy_trie_nodes(struct TrieNode* trie_node) {
+
+    for(int i = 0; i < CHARSET; i++) {
+        if(trie_node->next[i] != NULL)
+            destroy_trie_nodes(trie_node->next[i]);
+    }
+    free(trie_node);
 }

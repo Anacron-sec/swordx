@@ -1,21 +1,20 @@
 #pragma once
 
-/* W_DUP stands for word duplicate, W_NEW stands for word new */
-typedef enum {WORD_NEW, WORD_DUPLICATE} wordStatus;
+#include <stdlib.h> 
 
-/* First-class ADT, TrieNode is defined in implementation */
-typedef struct TrieNode* TrieNodePtr;
+
+/* First-class ADT, Trie is defined in implementation */
+typedef struct Trie* TriePtr;
 
 /* Initializes a trie and returns a pointer to the new structure */
-TrieNodePtr create_trie (void);
+TriePtr create_trie (void);
 
 /* Frees up memory */
-void destroy_trie(TrieNodePtr);
+void destroy_trie(TriePtr);
 
-/* Inserts target word into the specified trie 
-** Returns WORD_DUPLICATE if the word already exists, WORD_NEW otherwise
+/* Inserts target word into the specified trie
 */
-wordStatus trie_insert(TrieNodePtr, char *);
+void trie_insert(TriePtr, char *);
 
-/* callback is a user defined function that's called at every word*/
-void trie_process_words (TrieNodePtr, void (*)(char*, int));
+/* Returns the number of unique words inside the trie */
+size_t get_count(TriePtr);

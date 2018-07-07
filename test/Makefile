@@ -9,13 +9,13 @@ ODIR=obj
 IDIR=../inc
 IDIRT=inc
 
-_OBJ = test_swordx.o test_trie.o test_trie_counted.o test_sorter.o
+_OBJ = test_swordx.o test_trie.o test_sorter.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-_DEPS = utils.h trie.h trie_counted.h sorter.h
+_DEPS = utils.h trie.h sorter.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_DEPST = test_trie.h test_trie_counted.h test_sorter.h
+_DEPST = test_trie.h test_sorter.h
 DEPST = $(patsubst %,$(IDIRT)/%,$(_DEPST))
 
 vpath %.c src
