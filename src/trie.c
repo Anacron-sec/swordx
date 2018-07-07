@@ -15,12 +15,12 @@ static const int CHAR_OFFSET = 10;
 struct TrieNode {
     struct TrieNode *next[CHARSET];
     int occurrences;
-    char* target_word;
+    char* stored_word;
 };
 
 struct Trie {
     struct TrieNode *root_node;
-    size_t num_words;
+    size_t word_count;
 };
 
 static int map_char(char c);
@@ -35,7 +35,7 @@ TriePtr create_trie() {
     init_node(node);
 
     trie->root_node = node;
-    trie->num_words = 0;
+    trie->word_count = 0;
 
     return trie;
 }
@@ -61,10 +61,10 @@ void trie_insert(TriePtr trie, char* new_string) {
         query_next++;
     }
     
-    if(tmp_node->target_word == NULL) {
-        tmp_node->target_word = malloc(strlen(new_string) * sizeof(char)); check_heap(tmp_node->target_word);
-        strcpy(tmp_node->target_word, new_string);
-        trie->num_words++;
+    if(tmp_node->stored_word == NULL) {
+        tmp_node->stored_word = malloc(strlen(new_string) * sizeof(char)); check_heap(tmp_node->stored_word);
+        strcpy(tmp_node->stored_word, new_string);
+        trie->word_count++;
     }
 
     /* Increase occurences in every case */
@@ -72,12 +72,12 @@ void trie_insert(TriePtr trie, char* new_string) {
 }
 
 size_t get_count(TriePtr trie) {
-    return trie->num_words;
+    return trie->word_count;
 }
 
 static void init_node(struct TrieNode* node) {
     node->occurrences = 0;
-    node->target_word = NULL;
+    node->stored_word = NULL;
     for(int i = 0; i < CHARSET; i++){
         node->next[i] = NULL;
     }
