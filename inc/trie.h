@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "sorter.h"
 
+typedef enum {ERROR_INSERT = -1, OK_INSERT} insertStatus;
 
 /* First-class ADT, Trie is defined in implementation */
 typedef struct Trie* TriePtr;
@@ -15,7 +16,7 @@ void destroy_trie(TriePtr);
 
 /* Inserts target word into the specified trie
 */
-void trie_insert(TriePtr, char *);
+insertStatus trie_insert(TriePtr, char *);
 
 /* Returns the number of unique words inside the trie */
 size_t get_count(TriePtr);

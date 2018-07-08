@@ -22,8 +22,12 @@ void test_create_trie (void) {
     CU_ASSERT_PTR_NOT_NULL(test_trie);
 }
 
+void test_insert_trie (void) {
+    CU_ASSERT_EQUAL(OK_INSERT, trie_insert(test_trie, "one"));
+    CU_ASSERT_EQUAL(ERROR_INSERT, trie_insert(test_trie, "!?=blah"));
+}
+
 void test_get_count(void) {
-    trie_insert(test_trie, "one");
     
     for(int i = 0; i < 2; i++) {
         trie_insert(test_trie, "two");

@@ -46,7 +46,7 @@ void destroy_trie(TriePtr trie) {
     free(trie);
 }
 
-void trie_insert(TriePtr trie, char* new_string) {
+insertStatus trie_insert(TriePtr trie, char* new_string) {
     
     struct TrieNode *tmp_node = trie->root_node; 
     char *query_next = new_string;
@@ -54,6 +54,8 @@ void trie_insert(TriePtr trie, char* new_string) {
 
     while(*query_next != '\0') {
         next_position = map_char(*query_next);
+        /* If not a word return error */
+        if(next_position == -1) return ERROR_INSERT; //TODO: Clean tree or check before
         if(tmp_node->next[next_position] == NULL)
             attach_new_node(tmp_node, next_position);
         
@@ -70,6 +72,7 @@ void trie_insert(TriePtr trie, char* new_string) {
 
     /* Increase occurences in every case */
     tmp_node->occurrences++;
+    return OK_INSERT;
 }
 
 size_t get_count(TriePtr trie) {
