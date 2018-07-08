@@ -1,28 +1,28 @@
 #pragma once
 #include <stdlib.h>
 
-/* First-class ADT, wordWithOccurrences is defined in implementation */
-typedef struct wordWithOccurrences* wordWithOccurrencesPtr;
+/* First-class ADT, WordWithOccurrences is defined in implementation */
+typedef struct WordWithOccurrences* WordWithOccurrencesPtr;
 
-/* Create a new wordWithOccurrences Structure 
+/* Create a new WordWithOccurrences Structure 
 ** char* is the word
 ** int is the number of occurences
 */
-wordWithOccurrencesPtr create_wordWithOccurrences(char*, int);
+WordWithOccurrencesPtr create_WordWithOccurrences(char*, int);
 
 /*
 ** Frees up memory
 */
-void destroy_wordWithOccurrences(wordWithOccurrencesPtr);
+void destroy_WordWithOccurrences(WordWithOccurrencesPtr);
 
 /*
-** Sorts an array of pointers to wordWithOccurrencesPtr
+** Sorts an array of pointers to WordWithOccurrencesPtr
 ** size_t is the size of the array
 */
-void sort_words_by_occurrences(wordWithOccurrencesPtr*, size_t);
+void sort_words_by_occurrences(WordWithOccurrencesPtr*, size_t);
 
-/* Returns the word inside of a target wordWithOccurrences */
-char* get_word(wordWithOccurrencesPtr);
+/* Returns the word inside of a target WordWithOccurrences */
+char* get_word(WordWithOccurrencesPtr);
 
-/* Returns the number of occurences of a target wordWithOccurrences */
-int get_occurrences(wordWithOccurrencesPtr);
+/* Returns the number of occurences of a target WordWithOccurrences */
+int get_occurrences(WordWithOccurrencesPtr);

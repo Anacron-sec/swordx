@@ -9,7 +9,7 @@ ODIR=obj
 IDIR=../inc
 IDIRT=inc
 
-_OBJ = test_swordx.o test_trie.o test_sorter.o
+_OBJ = test.o test_trie.o test_sorter.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 _DEPS = utils.h trie.h word_utils.h
@@ -21,8 +21,8 @@ DEPST = $(patsubst %,$(IDIRT)/%,$(_DEPST))
 vpath %.c src
 
 
-test_swordx: $(OBJ) $(COMMON_O)
-	$(CC) -o $(BDIR)/test_swordx $^ $(CFLAGS)
+test: $(OBJ) $(COMMON_O)
+	$(CC) -o $(BDIR)/test $^ $(CFLAGS)
 
 $(ODIR)/%.o: %.c $(DEPS) $(DEPST)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -32,4 +32,4 @@ $(ODIR)/%.o: %.c $(DEPS) $(DEPST)
 clean:
 	rm -f $(BDIR)/* $(ODIR)/*
 
-all: test_swordx
+all: test

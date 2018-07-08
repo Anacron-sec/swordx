@@ -22,4 +22,4 @@ insertStatus trie_insert(TriePtr, char *);
 size_t get_count(TriePtr);
 
 /* Returns a wordWithOccurences array */
-wordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);
+WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);

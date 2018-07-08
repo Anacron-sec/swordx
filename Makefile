@@ -30,7 +30,7 @@ uninstall:
 	rm -f /usr/local/bin/swordx
 
 test:
-	make && make -C test && test/bin/test_swordx
+	make -C test && test/bin/test
 
 clean:
 	rm -f $(ODIR)/*.o $(BDIR)/* && make clean -C test

@@ -27,7 +27,7 @@ static int map_char(char c);
 static void init_node(struct TrieNode*);
 static void attach_new_node(struct TrieNode*, short);
 static void destroy_trie_nodes(struct TrieNode*);
-static void trie_to_wordWithOccurences_array(struct TrieNode*, wordWithOccurrencesPtr*, int*);
+static void trie_to_WordWithOccurences_array(struct TrieNode*, WordWithOccurrencesPtr*, int*);
 
 TriePtr create_trie() {
     TriePtr trie = (TriePtr) malloc(sizeof(struct Trie)); check_heap(trie);
@@ -79,13 +79,13 @@ size_t get_count(TriePtr trie) {
     return trie->word_count;
 }
 
-wordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr trie) {
+WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr trie) {
     size_t size = trie->word_count;
-    wordWithOccurrencesPtr* words = (wordWithOccurrencesPtr*) malloc(size * sizeof(wordWithOccurrencesPtr)); check_heap(words);
+    WordWithOccurrencesPtr* words = (WordWithOccurrencesPtr*) malloc(size * sizeof(WordWithOccurrencesPtr)); check_heap(words);
 
     int counter = 0; int* counter_ptr = &counter;
 
-    trie_to_wordWithOccurences_array(trie->root_node, words, counter_ptr);
+    trie_to_WordWithOccurences_array(trie->root_node, words, counter_ptr);
 
     sort_words_by_occurrences(words, size);
 
@@ -124,14 +124,14 @@ static void destroy_trie_nodes(struct TrieNode* trie_node) {
     free(trie_node);
 }
 
-static void trie_to_wordWithOccurences_array(struct TrieNode* trie_node, wordWithOccurrencesPtr* wwo, int* counter) {
+static void trie_to_WordWithOccurences_array(struct TrieNode* trie_node, WordWithOccurrencesPtr* wwo, int* counter) {
     if(trie_node->occurrences > 0) {
-        wwo[*counter] = create_wordWithOccurrences(trie_node->stored_word, trie_node->occurrences);
+        wwo[*counter] = create_WordWithOccurrences(trie_node->stored_word, trie_node->occurrences);
         *counter = *counter + 1;
     }
 
     for (int i = 0; i < CHARSET; i++) {
         if(trie_node->next[i] != NULL)
-            trie_to_wordWithOccurences_array(trie_node->next[i], wwo, counter);
+            trie_to_WordWithOccurences_array(trie_node->next[i], wwo, counter);
     }
 }

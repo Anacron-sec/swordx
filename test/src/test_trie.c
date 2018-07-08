@@ -49,7 +49,7 @@ void test_get_count(void) {
 }
 
 void test_sort(void) {
-    wordWithOccurrencesPtr* sorted_trie = sort_trie_by_occurences(test_trie);
+    WordWithOccurrencesPtr* sorted_trie = sort_trie_by_occurences(test_trie);
     CU_ASSERT_PTR_NOT_NULL(sorted_trie);
 
     CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[0]), "thousand");
