@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <CUnit/CUnit.h>
 #include "word_utils.h"
-#include "test_sorter.h"
+#include "test_word_utils.h"
 
 WordWithOccurrencesPtr first;
 WordWithOccurrencesPtr second;
