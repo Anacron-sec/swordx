@@ -4,7 +4,7 @@
 #include "utils.h"
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "version 0.0.0";
+const char *argp_program_version = "SwordX version 0.0.0";
 
 struct arguments {
     char *argz;
