@@ -1,6 +1,7 @@
 #pragma once
 
-#include <stdlib.h> 
+#include <stdlib.h>
+#include "sorter.h"
 
 
 /* First-class ADT, Trie is defined in implementation */
@@ -18,3 +19,6 @@ void trie_insert(TriePtr, char *);
 
 /* Returns the number of unique words inside the trie */
 size_t get_count(TriePtr);
+
+/* Returns a wordWithOccurences array */
+wordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);

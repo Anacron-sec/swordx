@@ -4,6 +4,7 @@
 #include <string.h>
 #include "trie.h"
 #include "utils.h"
+#include "sorter.h"
 
 #define CHARSET 36 // 10 digits + 26 alphabets
 
@@ -27,6 +28,7 @@ static int map_char(char c);
 static void init_node(struct TrieNode*);
 static void attach_new_node(struct TrieNode*, short);
 static void destroy_trie_nodes(struct TrieNode*);
+static void trie_to_wordoccurences(struct TrieNode*, wordWithOccurrencesPtr*, int*);
 
 TriePtr create_trie() {
     TriePtr trie = (TriePtr) malloc(sizeof(struct Trie)); check_heap(trie);
@@ -75,6 +77,19 @@ size_t get_count(TriePtr trie) {
     return trie->word_count;
 }
 
+wordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr trie) {
+    size_t size = trie->word_count;
+    wordWithOccurrencesPtr* words = (wordWithOccurrencesPtr*) malloc(size * sizeof(wordWithOccurrencesPtr)); check_heap(words);
+
+    int counter = 0; int* counter_ptr = &counter;
+
+    trie_to_wordoccurences(trie->root_node, words, counter_ptr);
+
+    sort_words_by_occurrences(words, size);
+
+    return words;
+}
+
 static void init_node(struct TrieNode* node) {
     node->occurrences = 0;
     node->stored_word = NULL;
@@ -105,4 +120,16 @@ static void destroy_trie_nodes(struct TrieNode* trie_node) {
             destroy_trie_nodes(trie_node->next[i]);
     }
     free(trie_node);
+}
+
+static void trie_to_wordoccurences(struct TrieNode* trie_node, wordWithOccurrencesPtr* wwo, int* counter) {
+    if(trie_node->occurrences > 0) {
+        wwo[*counter] = create_wordWithOccurrences(trie_node->stored_word, trie_node->occurrences);
+        *counter = *counter + 1;
+    }
+
+    for (int i = 0; i < CHARSET; i++) {
+        if(trie_node->next[i] != NULL)
+            trie_to_wordoccurences(trie_node->next[i], wwo, counter);
+    }
 }

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "test_trie.h"
 #include "trie.h"
+#include "sorter.h"
 #include "utils.h"
 
 TriePtr test_trie;
@@ -24,28 +25,37 @@ void test_create_trie (void) {
 void test_get_count(void) {
     trie_insert(test_trie, "one");
     
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 2; i++) {
         trie_insert(test_trie, "two");
     }
 
-    trie_insert(test_trie, "three");
-    trie_insert(test_trie, "three");
+    for(int i = 0; i < 3; i++) {
+        trie_insert(test_trie, "three");
+    }
 
-    CU_ASSERT_EQUAL(get_count(test_trie), 3);
+    for(int i=0; i < 100; i++) {
+        trie_insert(test_trie, "hundred");
+    }
+
+    for(int i=0; i < 1000; i++) {
+        trie_insert(test_trie, "thousand");
+    }
+
+    CU_ASSERT_EQUAL(get_count(test_trie), 5);
 }
 
-/*
-void test_insert_word (void) {
-    char *wordToInsert = "wordtwo";
-    wordStatus ws = trie_insert(test_trie, wordToInsert);
-    CU_ASSERT_EQUAL(ws, WORD_NEW);
+void test_sort(void) {
+    wordWithOccurrencesPtr* sorted_trie = sort_trie_by_occurences(test_trie);
+    CU_ASSERT_PTR_NOT_NULL(sorted_trie);
 
-    ws = trie_insert(test_trie, wordToInsert);
-    CU_ASSERT_NOT_EQUAL(ws, WORD_NEW);
-    CU_ASSERT_EQUAL(ws, WORD_DUPLICATE);
-
-    char *newWord = "wordone";
-    ws = trie_insert(test_trie, newWord);
-    CU_ASSERT_EQUAL(ws, WORD_NEW);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[0]), "one");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[0]), 1);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[1]), "two");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[1]), 2);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[2]), "three");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[2]), 3);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[3]), "hundred");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[3]), 100);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[4]), "thousand");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[4]), 1000);
 }
-*/

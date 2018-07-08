@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "utils.h"
 #include "sorter.h"
 
@@ -21,7 +22,7 @@ void destroy_wordWithOccurrences(wordWithOccurrencesPtr wwoPtr) {
     free(wwoPtr);
 }
 
-void sort_words_by_occurrences (wordWithOccurrencesPtr words[], size_t length) {
+void sort_words_by_occurrences (wordWithOccurrencesPtr* words, size_t length) {
     qsort(words, length, sizeof(wordWithOccurrencesPtr), compare_words_by_occurrences);
 }
 

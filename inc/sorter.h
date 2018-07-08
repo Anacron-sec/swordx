@@ -19,7 +19,7 @@ void destroy_wordWithOccurrences(wordWithOccurrencesPtr);
 ** Sorts an array of pointers to wordWithOccurrencesPtr
 ** size_t is the size of the array
 */
-void sort_words_by_occurrences(wordWithOccurrencesPtr[], size_t);
+void sort_words_by_occurrences(wordWithOccurrencesPtr*, size_t);
 
 /* Returns the word inside of a target wordWithOccurrences */
 char* get_word(wordWithOccurrencesPtr);
