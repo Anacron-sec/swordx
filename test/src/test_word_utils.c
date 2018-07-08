@@ -13,7 +13,7 @@ WordWithOccurrencesPtr words[4];
 
 
 
-int init_suite_sorter(void) {
+int init_suite_word_utils(void) {
     first = create_WordWithOccurrences("first", 2);
     second = create_WordWithOccurrences("second", 5);
     third = create_WordWithOccurrences("third", 8);
@@ -28,7 +28,7 @@ int init_suite_sorter(void) {
     return 0;
 }
 
-int clean_suite_sorter(void) {
+int clean_suite_word_utils(void) {
     destroy_WordWithOccurrences(first);
     destroy_WordWithOccurrences(second);
     destroy_WordWithOccurrences(third);

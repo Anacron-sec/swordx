@@ -5,14 +5,14 @@
 #include "test_word_utils.h"
 
 int main (void) {
-    CU_pSuite pSuite_sorter = NULL;
+    CU_pSuite pSuite_word_utils = NULL;
     CU_pSuite pSuite_trie = NULL;
 
     if (CUE_SUCCESS != CU_initialize_registry())
         return CU_get_error();
 
-    pSuite_sorter = CU_add_suite("occurency_sorter_test_suite", init_suite_sorter, clean_suite_sorter);
-    if (NULL == pSuite_sorter) {
+    pSuite_word_utils = CU_add_suite("occurency_word_utils_test_suite", init_suite_word_utils, clean_suite_word_utils);
+    if (NULL == pSuite_word_utils) {
         CU_cleanup_registry();
         return CU_get_error();
     }
@@ -24,8 +24,8 @@ int main (void) {
     }
 
 
-    if ((NULL == CU_add_test(pSuite_sorter,"sorter",test_sorting)) ||
-        (NULL == CU_add_test(pSuite_sorter,"word_utils getters",test_getters)) ||
+    if ((NULL == CU_add_test(pSuite_word_utils,"word_utils",test_sorting)) ||
+        (NULL == CU_add_test(pSuite_word_utils,"word_utils getters",test_getters)) ||
         (NULL == CU_add_test(pSuite_trie, "create_trie", test_create_trie)) ||
         (NULL == CU_add_test(pSuite_trie, "insert trie", test_insert_trie)) ||
         (NULL == CU_add_test(pSuite_trie, "get count", test_get_count)) ||
