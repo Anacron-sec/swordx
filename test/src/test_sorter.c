@@ -36,6 +36,13 @@ int clean_suite_sorter(void) {
     return 0;
 }
 
+void test_getters(void) {
+    CU_ASSERT_STRING_EQUAL(get_word(first), "first");
+    CU_ASSERT_EQUAL(get_occurrences(first), 2);
+    CU_ASSERT_STRING_EQUAL(get_word(second), "second");
+    CU_ASSERT_EQUAL(get_occurrences(second), 5);
+}
+
 void test_sorting(void) {
     CU_ASSERT_STRING_EQUAL(get_word(words[0]), "third");
     CU_ASSERT_EQUAL(get_occurrences(words[0]),8);
