@@ -3,7 +3,7 @@
 #include <string.h>
 #include "trie.h"
 #include "utils.h"
-#include "sorter.h"
+#include "word_utils.h"
 
 #define CHARSET 36 // 10 digits + 26 alphabets
 

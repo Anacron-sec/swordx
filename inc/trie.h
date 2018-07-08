@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
-#include "sorter.h"
+#include "word_utils.h"
 
 typedef enum {ERROR_INSERT = -1, OK_INSERT} insertStatus;
 

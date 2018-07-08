@@ -6,12 +6,12 @@ ODIR=obj
 IDIR=inc
 SDIR=src
 
-_DEPS = trie.h utils.h sorter.h
+_DEPS = trie.h utils.h word_utils.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-_OBJ = swordx.o trie.o utils.o sorter.o
+_OBJ = swordx.o trie.o utils.o word_utils.o
 
 swordx: $(OBJ)
 	$(CC) $(CFLAGS) -o $(BDIR)/$@ $^

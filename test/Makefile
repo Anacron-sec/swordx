@@ -12,7 +12,7 @@ IDIRT=inc
 _OBJ = test_swordx.o test_trie.o test_sorter.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-_DEPS = utils.h trie.h sorter.h
+_DEPS = utils.h trie.h word_utils.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _DEPST = test_trie.h test_sorter.h

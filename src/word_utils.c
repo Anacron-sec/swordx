@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "utils.h"
-#include "sorter.h"
+#include "word_utils.h"
 
 struct wordWithOccurrences {
     char* word_chosen;

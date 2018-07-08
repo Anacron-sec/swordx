@@ -3,7 +3,7 @@
 #include <string.h>
 #include "test_trie.h"
 #include "trie.h"
-#include "sorter.h"
+#include "word_utils.h"
 #include "utils.h"
 
 TriePtr test_trie;
