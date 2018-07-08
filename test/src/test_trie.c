@@ -48,14 +48,16 @@ void test_sort(void) {
     wordWithOccurrencesPtr* sorted_trie = sort_trie_by_occurences(test_trie);
     CU_ASSERT_PTR_NOT_NULL(sorted_trie);
 
-    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[0]), "one");
-    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[0]), 1);
-    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[1]), "two");
-    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[1]), 2);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[0]), "thousand");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[0]), 1000);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[1]), "hundred");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[1]), 100);
     CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[2]), "three");
     CU_ASSERT_EQUAL(get_occurrences(sorted_trie[2]), 3);
-    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[3]), "hundred");
-    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[3]), 100);
-    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[4]), "thousand");
-    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[4]), 1000);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[3]), "two");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[3]), 2);
+    CU_ASSERT_STRING_EQUAL(get_word(sorted_trie[4]), "one");
+    CU_ASSERT_EQUAL(get_occurrences(sorted_trie[4]), 1);
+
+    free(sorted_trie);
 }

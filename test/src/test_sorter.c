@@ -48,13 +48,12 @@ void test_sorting(void) {
 
     sort_words_by_occurrences(words, length);
 
-    CU_ASSERT_STRING_EQUAL(get_word(words[0]), "first");
-    CU_ASSERT_EQUAL(get_occurrences(words[0]),2);
-    CU_ASSERT_STRING_EQUAL(get_word(words[1]), "second");
-    CU_ASSERT_EQUAL(get_occurrences(words[1]),5);
-    CU_ASSERT_STRING_EQUAL(get_word(words[2]), "third");
-    CU_ASSERT_EQUAL(get_occurrences(words[2]),8);
-    CU_ASSERT_STRING_EQUAL(get_word(words[3]), "fourth");
-    CU_ASSERT_EQUAL(get_occurrences(words[3]),9);
+    CU_ASSERT_STRING_EQUAL(get_word(words[0]), "fourth");
+    CU_ASSERT_EQUAL(get_occurrences(words[0]),9);
+    CU_ASSERT_STRING_EQUAL(get_word(words[1]), "third");
+    CU_ASSERT_EQUAL(get_occurrences(words[1]),8);
+    CU_ASSERT_STRING_EQUAL(get_word(words[2]), "second");
+    CU_ASSERT_EQUAL(get_occurrences(words[2]),5);
+    CU_ASSERT_STRING_EQUAL(get_word(words[3]), "first");
+    CU_ASSERT_EQUAL(get_occurrences(words[3]),2);
 }
-

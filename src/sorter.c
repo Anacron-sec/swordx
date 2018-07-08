@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "utils.h"
 #include "sorter.h"
 
@@ -41,5 +40,5 @@ static int compare_words_by_occurrences(const void *first_word, const void *seco
     wordWithOccurrencesPtr word1 = *word1_ptr;
     wordWithOccurrencesPtr word2 = *word2_ptr;
 
-    return word1->occurences - word2->occurences;
+    return word2->occurences - word1->occurences;
 }
