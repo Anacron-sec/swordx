@@ -7,7 +7,7 @@
 char *openFile(char *);
 char *readFile(char *);
 int seekFile(FILE *);
-char *tok(char *);
+void *tok(char *);
 
 int main()
 {
@@ -31,11 +31,8 @@ char *readFile(char *path)
     char *buf = (char *)malloc(size * sizeof(char));
     //check_heap(buf);
     fread(buf, size * sizeof(char), 1, ptrfile);
-    /*for (int i = 0; i < size; i++)
-    {
-        putc(buf[i], stdout);
-    }*/
     fclose(ptrfile);
+    tok(buf);
     return buf;
 }
 
@@ -47,7 +44,7 @@ int seekFile(FILE *ptrfile)
     return size;
 }
 
-char *tok(char *str)
+void *tok(char *str)
 {
     const char delim[2] = " ";
     char *token;
@@ -62,6 +59,4 @@ char *tok(char *str)
 
         token = strtok(NULL, delim);
     }
-
-    return "done";
 }
