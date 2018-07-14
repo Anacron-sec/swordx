@@ -10,8 +10,9 @@ int seekFile(FILE *);
 void *tok(char *);
 
 int main()
-{
-    printf("%s\n", openFile("//home//samuele//Desktop//text.txt"));
+{   
+    char* s = openFile("//home//samuele//Desktop//text.txt");
+    if(strcmp(s, "errore") == 0) printf("errore");
     return 0;
 }
 
