@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdio.h>
 #include "trie.h"
 #include "utils.h"
 #include "word_utils.h"
@@ -29,6 +30,7 @@ static void attach_new_node(struct TrieNode*, short);
 static void destroy_trie_nodes(struct TrieNode*);
 static void trie_to_WordWithOccurences_array(struct TrieNode*, WordWithOccurrencesPtr*, int*);
 static WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);
+static void write_words_to_file(struct TrieNode*, FILE*);
 
 TriePtr create_trie() {
     TriePtr trie = (TriePtr) malloc(sizeof(struct Trie)); check_heap(trie);
@@ -78,6 +80,34 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
 
 size_t get_count(TriePtr trie) {
     return trie->word_count;
+}
+
+writeStatus write_trie(TriePtr trie, char *file_name) {
+    FILE *fptr = fopen(file_name,"w");
+    if(fptr == NULL)
+    {
+        return ERROR_WRITE;
+    }
+    write_words_to_file(trie->root_node, fptr);
+    fclose(fptr);
+    return OK_WRITE;
+}
+
+writeStatus write_trie_by_occurrences(TriePtr trie, char *file_name) {
+    //TODO
+    sort_trie_by_occurences(trie);
+    return OK_WRITE;
+}
+
+static void write_words_to_file(struct TrieNode* node, FILE* file_pointer) {
+    if (node->occurrences > 0) {
+        fprintf(file_pointer,"%s %d\n",node->stored_word, node->occurrences);
+    }
+
+    // Recursively calls for entire trie
+    for (int i = 0; i < CHARSET; i++) {
+        if(node->next[i] != NULL) write_words_to_file(node->next[i], file_pointer);
+    }
 }
 
 static WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr trie) {
