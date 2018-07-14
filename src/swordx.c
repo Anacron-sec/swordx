@@ -4,6 +4,8 @@
 #include "utils.h"
 #include "trie.h"
 
+int sort_by_occurences = 0;
+
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
 const char *argp_program_version = "SwordX version 0.0.0";
 
@@ -24,7 +26,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
             num ? printf("minimum -> %ld \n", num) : printf("minimum:invalid");
         } break;
         case 'i': printf("ignore -> %s\n", arg); break;
-        case 's': printf("Sort by occurences\n"); break;
+        case 's': sort_by_occurences = 1; break;
         case 'o': printf("Output file --> %s\n", arg); break;
                                                                                                                                                                                                                                                                                                                                                                          case 1337: pirate(); break;
         /* Main arguments */
@@ -92,8 +94,14 @@ int main(int argc, char **argv)
         free (arguments.argz);
     }
 
-    write_trie(trie, "swordx.out") == OK_WRITE ?
-        printf("\nResults saved in file swordx.out") : printf("\nError while saving results.");
+    if(sort_by_occurences) {
+        write_trie_by_occurrences(trie, "swordx.out") == OK_WRITE ?
+            printf("\nResults saved in file swordx.out\n") : printf("\nError while saving results.\n");
+    } else {
+        write_trie(trie, "swordx.out") == OK_WRITE ?
+            printf("\nResults saved in file swordx.out\n") : printf("\nError while saving results.\n");
+    }
+    
     destroy_trie(trie);
     exit(EXIT_SUCCESS);
 }
