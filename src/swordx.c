@@ -5,6 +5,7 @@
 #include "trie.h"
 
 int sort_by_occurences = 0;
+char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
 const char *argp_program_version = "SwordX version 0.0.0";
@@ -27,7 +28,10 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         } break;
         case 'i': printf("TODO: ignore -> %s\n", arg); break;
         case 's': sort_by_occurences = 1; break;
-        case 'o': printf("TOOD: Output file --> %s\n", arg); break;
+        case 'o': {
+            output_file = (char *) malloc((strlen(arg) + 1)*sizeof(char)); check_heap(output_file);
+            strcpy(output_file, arg);
+        } break;
                                                                                                                                                                                                                                                                                                                                                                          case 1337: pirate(); break;
         /* Main arguments */
         case ARGP_KEY_INIT: {
@@ -94,8 +98,8 @@ int main(int argc, char **argv)
         free (arguments.argz);
     }
 
-    writeStatus ws = sort_by_occurences ? write_trie_by_occurrences(trie, "swordx.out") : write_trie(trie, "swordx.out");
-    ws == OK_WRITE ? printf("\nResults saved in file swordx.out\n") : printf("\nError while saving results.\n");
+    writeStatus ws = sort_by_occurences ? write_trie_by_occurrences(trie, output_file) : write_trie(trie, output_file);
+    ws == OK_WRITE ? printf("\nResults saved in file %s\n", output_file) : printf("\nError while saving results.\n");
     
     destroy_trie(trie);
     exit(EXIT_SUCCESS);
