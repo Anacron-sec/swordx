@@ -10,9 +10,10 @@ int seekFile(FILE *);
 void *tok(char *);
 
 int main()
-{   
-    char* s = openFile("//home//samuele//Desktop//text.txt");
-    if(strcmp(s, "errore") == 0) printf("errore");
+{
+    char *s = openFile("text.txt");
+    if(strcmp(s, "erroreaaaa") == 0) printf("errore");
+
     return 0;
 }
 
@@ -49,15 +50,12 @@ void *tok(char *str)
 {
     const char delim[2] = " ";
     char *token;
-
-    /* get the first token */
-    token = strtok(str, delim);
-
+    char *save;
+        
     /* walk through other tokens */
-    while (token != NULL)
+    do
     {
-        printf("%s\n", token);
-
-        token = strtok(NULL, delim);
-    }
+        token = strtok_r(NULL, delim, &str);
+	printf("token: %s\n", token);
+    } while (token != NULL);
 }
