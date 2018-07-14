@@ -28,8 +28,8 @@ int main (void) {
         (NULL == CU_add_test(pSuite_word_utils,"word_utils sorter",test_sorting)) ||
         (NULL == CU_add_test(pSuite_trie, "create_trie", test_create_trie)) ||
         (NULL == CU_add_test(pSuite_trie, "insert trie", test_insert_trie)) ||
-        (NULL == CU_add_test(pSuite_trie, "get count", test_get_count)) ||
-        (NULL == CU_add_test(pSuite_trie, "test sort", test_sort)))
+        (NULL == CU_add_test(pSuite_trie, "get count", test_get_count)))
+        //(NULL == CU_add_test(pSuite_trie, "test sort", test_sort)))
    {
       CU_cleanup_registry();
       return CU_get_error();

@@ -28,6 +28,7 @@ static void init_node(struct TrieNode*);
 static void attach_new_node(struct TrieNode*, short);
 static void destroy_trie_nodes(struct TrieNode*);
 static void trie_to_WordWithOccurences_array(struct TrieNode*, WordWithOccurrencesPtr*, int*);
+static WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);
 
 TriePtr create_trie() {
     TriePtr trie = (TriePtr) malloc(sizeof(struct Trie)); check_heap(trie);
@@ -79,7 +80,7 @@ size_t get_count(TriePtr trie) {
     return trie->word_count;
 }
 
-WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr trie) {
+static WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr trie) {
     size_t size = trie->word_count;
     WordWithOccurrencesPtr* words = (WordWithOccurrencesPtr*) malloc(size * sizeof(WordWithOccurrencesPtr)); check_heap(words);
 

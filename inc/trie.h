@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdlib.h>
-#include "word_utils.h"
 
 typedef enum {ERROR_INSERT = -1, OK_INSERT} insertStatus;
 
@@ -22,4 +21,4 @@ insertStatus trie_insert(TriePtr, char *);
 size_t get_count(TriePtr);
 
 /* Returns a wordWithOccurences array */
-WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);
+//WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);

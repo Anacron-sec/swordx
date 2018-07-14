@@ -48,6 +48,7 @@ void test_get_count(void) {
     CU_ASSERT_EQUAL(get_count(test_trie), 5);
 }
 
+/*
 void test_sort(void) {
     WordWithOccurrencesPtr* sorted_trie = sort_trie_by_occurences(test_trie);
     CU_ASSERT_PTR_NOT_NULL(sorted_trie);
@@ -65,3 +66,4 @@ void test_sort(void) {
 
     free(sorted_trie);
 }
+*/
