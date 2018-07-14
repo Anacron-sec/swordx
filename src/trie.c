@@ -94,8 +94,17 @@ writeStatus write_trie(TriePtr trie, char *file_name) {
 }
 
 writeStatus write_trie_by_occurrences(TriePtr trie, char *file_name) {
-    //TODO
-    sort_trie_by_occurences(trie);
+    FILE *fptr = fopen(file_name, "w");
+    if(fptr == NULL) {
+        return ERROR_WRITE;
+    }
+
+    WordWithOccurrencesPtr* wwo_ptr = sort_trie_by_occurences(trie);
+    for(int i=0; i < trie->word_count; i++) {
+        fprintf(fptr, "%s %d\n", get_word(wwo_ptr[i]), get_occurrences(wwo_ptr[i]));
+    }
+    fclose(fptr);
+    free(wwo_ptr);
     return OK_WRITE;
 }
 

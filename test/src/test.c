@@ -29,7 +29,8 @@ int main (void) {
         (NULL == CU_add_test(pSuite_trie, "create_trie", test_create_trie)) ||
         (NULL == CU_add_test(pSuite_trie, "insert trie", test_insert_trie)) ||
         (NULL == CU_add_test(pSuite_trie, "get count", test_get_count)) ||
-        (NULL == CU_add_test(pSuite_trie,"write to file",test_write_trie)))
+        (NULL == CU_add_test(pSuite_trie,"write to file",test_write_trie)) ||
+        (NULL == CU_add_test(pSuite_trie,"write to file sorted",test_write_trie_sorted)))
         //(NULL == CU_add_test(pSuite_trie, "test sort", test_sort)))
    {
       CU_cleanup_registry();

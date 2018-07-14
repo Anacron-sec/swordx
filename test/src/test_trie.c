@@ -81,7 +81,29 @@ void test_write_trie(void) {
         free(line);
     }
     fclose(fptr);
+    // Removes test file
     CU_ASSERT_EQUAL(remove("result.txt"), 0);
+}
+
+void test_write_trie_sorted(void) {
+    writeStatus ws = write_trie_by_occurrences(test_trie,"result_sorted.txt");
+    CU_ASSERT_EQUAL(ws, OK_WRITE);
+    
+    FILE *fptr = fopen("result_sorted.txt", "r");
+    CU_ASSERT_PTR_NOT_NULL_FATAL(fptr);
+
+    for(int i=0; i < get_count(test_trie); i++) {
+        char * line = NULL;
+        size_t len = 0;
+        CU_ASSERT_NOT_EQUAL_FATAL(getline(&line, &len, fptr), -1);
+        char cmp[100];
+        int index = (get_count(test_trie) - 1) - i; // array is reversed
+        sprintf(cmp, "%s %d\n", test_words[index], occurrences[index]);
+        CU_ASSERT_STRING_EQUAL(line, cmp);
+        free(line);
+    }
+    // Removes test file
+    CU_ASSERT_EQUAL(remove("result_sorted.txt"), 0);
 }
 
 /*
