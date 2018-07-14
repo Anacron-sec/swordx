@@ -269,4 +269,5 @@ void pirate(void) {
     printf("             z$RRM8F\"       Pirate Edition        \"N8@M$bL\n");
     printf("            5`RM$#                                  'R88f)R\n");
     printf("            'h.$\"                                     #$x*\n\n\n");
+    printf("\n\n");
 }

@@ -17,17 +17,17 @@ struct arguments {
 static int parse_opt(int key, char *arg, struct argp_state *state) {
     struct arguments *a = state->input;
     switch(key) {
-        case 'r': printf("recursive\n"); break;
-        case 'f': printf("follow\n"); break;
-        case 'e': printf("exclude -> %s\n", arg); break;
-        case 'a': printf("alpha\n"); break;
+        case 'r': printf("TODO: recursive\n"); break;
+        case 'f': printf("TODO: follow\n"); break;
+        case 'e': printf("TOOD: exclude -> %s\n", arg); break;
+        case 'a': printf("TODO: alpha\n"); break;
         case 'm': {
             long num = strtoul(arg, NULL, 10);
-            num ? printf("minimum -> %ld \n", num) : printf("minimum:invalid");
+            num ? printf("TODO: minimum -> %ld \n", num) : printf("TOOD: minimum:invalid");
         } break;
-        case 'i': printf("ignore -> %s\n", arg); break;
+        case 'i': printf("TODO: ignore -> %s\n", arg); break;
         case 's': sort_by_occurences = 1; break;
-        case 'o': printf("Output file --> %s\n", arg); break;
+        case 'o': printf("TOOD: Output file --> %s\n", arg); break;
                                                                                                                                                                                                                                                                                                                                                                          case 1337: pirate(); break;
         /* Main arguments */
         case ARGP_KEY_INIT: {
