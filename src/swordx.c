@@ -94,13 +94,8 @@ int main(int argc, char **argv)
         free (arguments.argz);
     }
 
-    if(sort_by_occurences) {
-        write_trie_by_occurrences(trie, "swordx.out") == OK_WRITE ?
-            printf("\nResults saved in file swordx.out\n") : printf("\nError while saving results.\n");
-    } else {
-        write_trie(trie, "swordx.out") == OK_WRITE ?
-            printf("\nResults saved in file swordx.out\n") : printf("\nError while saving results.\n");
-    }
+    writeStatus ws = sort_by_occurences ? write_trie_by_occurrences(trie, "swordx.out") : write_trie(trie, "swordx.out");
+    ws == OK_WRITE ? printf("\nResults saved in file swordx.out\n") : printf("\nError while saving results.\n");
     
     destroy_trie(trie);
     exit(EXIT_SUCCESS);
