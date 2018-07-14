@@ -2,6 +2,7 @@
 #include <argp.h>
 #include <argz.h>
 #include "utils.h"
+#include "trie.h"
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
 const char *argp_program_version = "SwordX version 0.0.0";
@@ -72,16 +73,27 @@ int main(int argc, char **argv)
         "Counts the number of word occurences in the specified files and saves the report to a text file."
     };
     struct arguments arguments;
+
+    // Creates trie to hold words
+    TriePtr trie = create_trie();
+
+    // Processes arguments one by one
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
         const char *prev = NULL;
         char *argument;
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             //TODO Regexp interpreter
-            printf ("Called with %s\n", argument);
+            trie_bulk_insert(trie, argument) == OK_BULK ? 
+                printf("Successfully inserted words from: %s\n", argument) : printf("Couldn't read: %s\n", argument);
+            
             prev = argument;
         }
 
         free (arguments.argz);
     }
+
+    write_trie(trie, "swordx.out") == OK_WRITE ?
+        printf("\nResults saved in file swordx.out") : printf("\nError while saving results.");
+    destroy_trie(trie);
     exit(EXIT_SUCCESS);
 }
