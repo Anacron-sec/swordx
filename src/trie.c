@@ -50,8 +50,7 @@ void destroy_trie(TriePtr trie) {
 }
 
 insertStatus trie_insert(TriePtr trie, char* new_string) {
-    
-    struct TrieNode *tmp_node = trie->root_node; 
+    struct TrieNode *tmp_node = trie->root_node;
     char *query_next = new_string;
     int next_position = 0;
 
@@ -106,6 +105,31 @@ writeStatus write_trie_by_occurrences(TriePtr trie, char *file_name) {
     fclose(fptr);
     free(wwo_ptr);
     return OK_WRITE;
+}
+
+bulkInsertStatus trie_bulk_insert(TriePtr trie, char *file_name) {
+    FILE *fptr = fopen(file_name, "r");
+    if(fptr == NULL) {
+        return ERROR_BULK;
+    }
+
+    char * line = NULL;
+    size_t len = 0;
+    while(getline(&line, &len, fptr) != -1) {
+        char* token;
+        char* save;
+
+        line[strlen(line) - 1] = '\0'; // Strips \n from line
+
+        token = strtok_r(line, " ", &save);
+
+        while(token != NULL) {
+            trie_insert(trie, token);
+            token = strtok_r(NULL, " ", &save);
+        }
+    }
+
+    return OK_BULK;
 }
 
 static void write_words_to_file(struct TrieNode* node, FILE* file_pointer) {
