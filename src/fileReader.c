@@ -1,11 +1,23 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
-char *testFile(char *);
-char *readFile(char *);
+//#include "utils.h" //TODO integrare nel makefile
 
-char *testFile(char *path)
+char *openFile(char *);
+char *readFile(char *);
+int seekFile(FILE *);
+void *tok(char *);
+
+int main()
+{
+    char *s = openFile("text.txt");
+    if(strcmp(s, "erroreaaaa") == 0) printf("errore");
+
+    return 0;
+}
+
+char *openFile(char *path)
 {
     int fd = open(path, O_RDONLY);
     if (fd < 0)
@@ -19,12 +31,10 @@ char *readFile(char *path)
     FILE *ptrfile = fopen(path, "r");
     int size = seekFile(ptrfile);
     char *buf = (char *)malloc(size * sizeof(char));
+    //check_heap(buf);
     fread(buf, size * sizeof(char), 1, ptrfile);
-    /*for (int i = 0; i < size; i++)
-    {
-        putc(buf[i], stdout);
-    }*/
     fclose(ptrfile);
+    tok(buf);
     return buf;
 }
 
@@ -33,4 +43,19 @@ int seekFile(FILE *ptrfile)
     fseek(ptrfile, 0L, SEEK_END);
     int size = ftell(ptrfile);
     fseek(ptrfile, 0L, SEEK_SET);
+    return size;
+}
+
+void *tok(char *str)
+{
+    const char delim[2] = " ";
+    char *token;
+    char *save;
+        
+    /* walk through other tokens */
+    do
+    {
+        token = strtok_r(NULL, delim, &str);
+	printf("token: %s\n", token);
+    } while (token != NULL);
 }
