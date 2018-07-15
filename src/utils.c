@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include "utils.h"
 
 void check_heap(void *obj) {
@@ -17,12 +18,20 @@ fileType type_of_file(char * path) {
     if (stat(path, &statbuf) != 0)
        return ERROR_TYPE;
     
-    if(S_ISLNK(statbuf.st_mode)) return SYMBOLIC_LINK;
+    
     if(S_ISDIR(statbuf.st_mode)) return DIRECTORY;
     if(S_ISREG(statbuf.st_mode)) return REGULAR_FILE;
     return OTHER;
 }
 
+
+bool isSymlink(char * path) {
+    struct stat statbuf;
+    if (lstat(path, &statbuf) != 0)
+        return false;
+    
+    return S_ISLNK(statbuf.st_mode) ? true : false;
+}
 
 
 

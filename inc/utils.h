@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
+
 typedef enum {ERROR_TYPE = -1, OTHER , REGULAR_FILE, DIRECTORY, SYMBOLIC_LINK} fileType;
 
 /* 
@@ -13,7 +15,10 @@ void check_heap(void *);
 */
 fileType type_of_file(char *);
 
-
+/*
+** This function returns if a path points to a symlink or not
+*/
+bool isSymlink(char *);
 
 
 
