@@ -17,11 +17,13 @@ bool recursive = false;
 bool follow = false;
 bool alpha = false;
 
+bool processing = false;
+
 
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 0.1.2";
+const char *argp_program_version = "SwordX version 0.1.4";
 
 struct arguments {
     char *argz;
@@ -108,7 +110,14 @@ int main(int argc, char **argv)
             //TODO Regexp interpreter
             if(type_of_file(argument) == REGULAR_FILE) {
                 trie_bulk_insert(trie, argument) == OK_BULK ? 
-                    printf("Successfully inserted words from: %s\n", argument) : printf("Couldn't read: %s\n", argument);
+                    printf("[OK] Successfully inserted words from: %s\n", argument) : printf("Error while processing: %s\n", argument);
+                processing = true;
+            } else if (type_of_file(argument) == DIRECTORY) {
+                printf("[ERROR] %s: Directory processing is currently not supported\n", argument);
+            } else if (type_of_file(argument) == OTHER) {
+                printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument);
+            } else {
+                printf("[ERROR] %s: You don't have permissions to read or the file doesn't exist.\n", argument);
             }
             
             prev = argument;
@@ -117,8 +126,12 @@ int main(int argc, char **argv)
         free (arguments.argz);
     }
 
-    writeStatus ws = sort_by_occurences ? write_trie_by_occurrences(trie, output_file) : write_trie(trie, output_file);
-    ws == OK_WRITE ? printf("\nResults saved in file %s\n", output_file) : printf("\nError while saving results.\n");
+    if(processing) {
+        writeStatus ws = sort_by_occurences ? write_trie_by_occurrences(trie, output_file) : write_trie(trie, output_file);
+        ws == OK_WRITE ? printf("\nResults saved in file %s\n", output_file) : printf("\nError while saving results.\n");
+    } else {
+        printf("\nNothing to process.\n");
+    }
     
     destroy_trie(trie);
     exit(EXIT_SUCCESS);
