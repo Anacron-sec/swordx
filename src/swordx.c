@@ -2,8 +2,15 @@
 #include <argp.h>
 #include <argz.h>
 #include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "utils.h"
 #include "trie.h"
+
+typedef enum {ERROR_TYPE = -1, OTHER , REGULAR_FILE, DIRECTORY} fileType;
+
+static fileType type_of_file(char *);
 
 bool sort_by_occurences = false;
 bool recursive = false;
@@ -92,6 +99,7 @@ int main(int argc, char **argv)
     // Processes arguments one by one
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
         
+        /* Creates a trie to store words */
         trie = create_trie();
 
         const char *prev = NULL;
@@ -112,4 +120,13 @@ int main(int argc, char **argv)
     
     destroy_trie(trie);
     exit(EXIT_SUCCESS);
+}
+
+static fileType type_of_file(char * path) {
+    struct stat statbuf;
+    if (stat(path, &statbuf) != 0)
+       return ERROR_TYPE;
+    
+    if(S_ISDIR(statbuf.st_mode)) return DIRECTORY;
+    if(S_ISREG(statbuf.st_mode)) return REGULAR_FILE;
 }
