@@ -14,7 +14,7 @@ bool alpha = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 0.1.0";
+const char *argp_program_version = "SwordX version 0.1.1";
 
 struct arguments {
     char *argz;
