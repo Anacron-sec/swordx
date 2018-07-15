@@ -19,7 +19,7 @@ fileType type_of_file(char * path) {
     
     if(S_ISDIR(statbuf.st_mode)) return DIRECTORY;
     if(S_ISREG(statbuf.st_mode)) return REGULAR_FILE;
-    if(S_ISLNK(statbuf.st_mode)) return LINK;
+    if(S_ISLNK(statbuf.st_mode)) return SYMBOLIC_LINK;
     return OTHER;
 }
 
