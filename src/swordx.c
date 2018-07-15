@@ -151,10 +151,11 @@ static void process_folder(TriePtr trie, char *argument) {
             while((ent = readdir(dir)) != NULL) {
                 char *filename = ent->d_name;
                 if(strcmp(filename, ".") != 0 && strcmp(filename, "..") != 0) {
-                    char* path = malloc(strlen(argument) + strlen(ent->d_name + 1 + 1)); check_heap(path);
+                    size_t pathsize = (strlen(argument) + strlen(filename) + 1 + 1 );
+                    char* path = (char*) malloc(  pathsize * sizeof(char) ); check_heap(path);
                     strcpy(path, argument);
                     strcat(path, "/");
-                    strcat(path, ent->d_name);
+                    strcat(path, filename);
                     if(type_of_file(path) == REGULAR_FILE) process_file(trie, path);
                     if(type_of_file(path) == DIRECTORY && recursive == true) process_folder(trie, path);
                     free(path);
