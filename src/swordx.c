@@ -6,6 +6,9 @@
 #include "trie.h"
 
 bool sort_by_occurences = false;
+bool recursive = false;
+bool follow = false;
+bool alpha = false;
 
 
 char *output_file = "swordx.out";
@@ -21,10 +24,10 @@ struct arguments {
 static int parse_opt(int key, char *arg, struct argp_state *state) {
     struct arguments *a = state->input;
     switch(key) {
-        case 'r': printf("TODO: recursive\n"); break;
-        case 'f': printf("TODO: follow\n"); break;
+        case 'r': recursive = true; printf("TODO: recursive\n"); break;
+        case 'f': follow = true; printf("TODO: follow\n"); break;
         case 'e': printf("TOOD: exclude -> %s\n", arg); break;
-        case 'a': printf("TODO: alpha\n"); break;
+        case 'a': alpha = true; printf("TODO: alpha\n"); break;
         case 'm': {
             long num = strtoul(arg, NULL, 10);
             num ? printf("TODO: minimum -> %ld \n", num) : printf("TOOD: minimum:invalid");
@@ -57,15 +60,15 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
 int main(int argc, char **argv)
 {
     struct argp_option options[] = {
-        { 0, 0, 0, 0, "Files and folders options:", 1},
-        {"recursive", 'r', 0, 0, "Follows subdirectories during file processing."},
-        {"follow", 'f', 0, 0, "Follows links inside directories."},
-        {"exclude", 'e', "<file>", 0, "The specified file is not used for processing."},
+        //{ 0, 0, 0, 0, "Files and folders options:", 1},
+        {"recursive", 'r', 0, OPTION_HIDDEN, "Follows subdirectories during file processing."},
+        {"follow", 'f', 0, OPTION_HIDDEN, "Follows links inside directories."},
+        {"exclude", 'e', "<file>", OPTION_HIDDEN, "The specified file is not used for processing."},
 
         { 0, 0, 0, 0, "Words options:", 2},
-        {"alpha", 'a', 0, 0, "Treats only words with alphabet characters."},
-        {"min", 'm', "<num>", 0, "Only words with a minimum length of <num> are processed."},
-        {"ignore", 'i', "<file>", 0, "Uses target file as a blacklist (words must be written one per line)."},
+        {"alpha", 'a', 0, OPTION_HIDDEN, "Treats only words with alphabet characters."},
+        {"min", 'm', "<num>", OPTION_HIDDEN, "Only words with a minimum length of <num> are processed."},
+        {"ignore", 'i', "<file>", OPTION_HIDDEN, "Uses target file as a blacklist (words must be written one per line)."},
         {"sortbyoccurrences", 's', 0, 0, "Words inserted in the output file are sorted by occurences."},
 
         { 0, 0, 0, 0, "Output Options:", 3},
