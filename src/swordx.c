@@ -106,8 +106,10 @@ int main(int argc, char **argv)
         char *argument;
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             //TODO Regexp interpreter
-            trie_bulk_insert(trie, argument) == OK_BULK ? 
-                printf("Successfully inserted words from: %s\n", argument) : printf("Couldn't read: %s\n", argument);
+            if(type_of_file(argument) == REGULAR_FILE) {
+                trie_bulk_insert(trie, argument) == OK_BULK ? 
+                    printf("Successfully inserted words from: %s\n", argument) : printf("Couldn't read: %s\n", argument);
+            }
             
             prev = argument;
         }
@@ -129,4 +131,5 @@ static fileType type_of_file(char * path) {
     
     if(S_ISDIR(statbuf.st_mode)) return DIRECTORY;
     if(S_ISREG(statbuf.st_mode)) return REGULAR_FILE;
+    return OTHER;
 }
