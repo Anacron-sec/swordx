@@ -14,7 +14,7 @@ bool alpha = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 0.1.1";
+const char *argp_program_version = "SwordX version 0.1.2";
 
 struct arguments {
     char *argz;
@@ -87,10 +87,13 @@ int main(int argc, char **argv)
     struct arguments arguments;
 
     // Creates trie to hold words
-    TriePtr trie = create_trie();
+    TriePtr trie;
 
     // Processes arguments one by one
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
+        
+        trie = create_trie();
+
         const char *prev = NULL;
         char *argument;
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
