@@ -1,10 +1,13 @@
 #include <stdlib.h>
 #include <argp.h>
 #include <argz.h>
+#include <stdbool.h>
 #include "utils.h"
 #include "trie.h"
 
-int sort_by_occurences = 0;
+bool sort_by_occurences = false;
+
+
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
@@ -27,7 +30,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
             num ? printf("TODO: minimum -> %ld \n", num) : printf("TOOD: minimum:invalid");
         } break;
         case 'i': printf("TODO: ignore -> %s\n", arg); break;
-        case 's': sort_by_occurences = 1; break;
+        case 's': sort_by_occurences = true; break;
         case 'o': {
             output_file = (char *) malloc((strlen(arg) + 1)*sizeof(char)); check_heap(output_file);
             strcpy(output_file, arg);
