@@ -18,7 +18,6 @@ fileType type_of_file(char * path) {
     if (stat(path, &statbuf) != 0)
        return ERROR_TYPE;
     
-    
     if(S_ISDIR(statbuf.st_mode)) return DIRECTORY;
     if(S_ISREG(statbuf.st_mode)) return REGULAR_FILE;
     return OTHER;

@@ -11,7 +11,7 @@ static void process_folder(TriePtr, char *);
 
 bool sort_by_occurences = false;
 bool recursive = false;
-//bool follow = false;
+bool follow = false;
 bool alpha = false;
 
 bool processing = false;
@@ -31,7 +31,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
     struct arguments *a = state->input;
     switch(key) {
         case 'r': recursive = true; break;
-        //case 'f': follow = true; printf("TODO: follow\n"); break;
+        case 'f': follow = true; break;
         case 'e': printf("TOOD: exclude -> %s\n", arg); break;
         case 'a': alpha = true; printf("TODO: alpha\n"); break;
         case 'm': {
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     struct argp_option options[] = {
         { 0, 0, 0, 0, "Files and folders options:", 1},
         {"recursive", 'r', 0, 0, "Follows subdirectories during file processing."},
-        //{"follow", 'f', 0, OPTION_HIDDEN, "Follows links."},
+        {"follow", 'f', 0, 0, "Follows links."},
         {"exclude", 'e', "<file>", OPTION_HIDDEN, "The specified file is not used for processing."},
 
         { 0, 0, 0, 0, "Words options:", 2},
@@ -105,6 +105,7 @@ int main(int argc, char **argv)
         char *argument;
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             //TODO Regexp interpreter
+            
             if(type_of_file(argument) == REGULAR_FILE) {
                 process_file(trie, argument);
             } else if (type_of_file(argument) == DIRECTORY) {
@@ -135,15 +136,27 @@ int main(int argc, char **argv)
 /* AUXILIARY FUNCTIONS */
 
 static void process_file(TriePtr trie, char *argument) {
+    
+    if(isSymlink(argument) == true && follow == false) {
+        printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
+        return;
+    }
+
     if(trie_bulk_insert(trie, argument) == OK_BULK) {
         printf("[OK] Successfully inserted words from: %s\n", argument);
         processing = true;
     } else {
-        printf("Error while processing file: %s\n", argument);
+        printf("[ERROR]Error while processing file: %s\n", argument);
     }
 }
 
 static void process_folder(TriePtr trie, char *argument) {
+
+    if(isSymlink(argument) == true && follow == false) {
+        printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
+        return;
+    }
+
     printf("Reading files inside directory %s ...\n", argument);
         DIR *dir;
         struct dirent *ent;
