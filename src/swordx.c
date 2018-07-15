@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     struct argp_option options[] = {
         { 0, 0, 0, 0, "Files and folders options:", 1},
         {"recursive", 'r', 0, 0, "Follows subdirectories during file processing."},
-        {"follow", 'f', 0, OPTION_HIDDEN, "Follows links inside directories."},
+        {"follow", 'f', 0, OPTION_HIDDEN, "Follows links."},
         {"exclude", 'e', "<file>", OPTION_HIDDEN, "The specified file is not used for processing."},
 
         { 0, 0, 0, 0, "Words options:", 2},

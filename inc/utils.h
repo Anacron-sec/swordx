@@ -1,6 +1,6 @@
 #pragma once
 
-typedef enum {ERROR_TYPE = -1, OTHER , REGULAR_FILE, DIRECTORY} fileType;
+typedef enum {ERROR_TYPE = -1, OTHER , REGULAR_FILE, DIRECTORY, LINK} fileType;
 
 /* 
 ** This function is meant to be used after a call to malloc or calloc to test the result.
