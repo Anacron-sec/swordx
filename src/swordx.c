@@ -7,6 +7,7 @@
 #include "trie.h"
 
 static void process_file(TriePtr, char *);
+static void process_folder(TriePtr, char *);
 
 bool sort_by_occurences = false;
 bool recursive = false;
@@ -107,24 +108,7 @@ int main(int argc, char **argv)
             if(type_of_file(argument) == REGULAR_FILE) {
                 process_file(trie, argument);
             } else if (type_of_file(argument) == DIRECTORY) {
-                printf("Reading files inside directory %s ...\n", argument);
-                DIR *dir;
-                struct dirent *ent;
-                if( (dir = opendir(argument)) != NULL) {
-                    while((ent = readdir(dir)) != NULL) {
-                        char *filename = ent->d_name;
-                        if(strcmp(filename, ".") != 0 && strcmp(filename, "..") != 0) {
-                            char* path = malloc(strlen(argument) + strlen(ent->d_name + 1 + 1));
-                            strcpy(path, argument);
-                            strcat(path, "/");
-                            strcat(path, ent->d_name);
-                            if(type_of_file(path) == REGULAR_FILE) process_file(trie, path);
-                            free(path);
-                        }
-                    }
-                }
-
-                printf("Done.\n\n");
+                process_folder(trie, argument);
             } else if (type_of_file(argument) == OTHER) {
                 printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument);
             } else {
@@ -150,11 +134,32 @@ int main(int argc, char **argv)
 
 /* AUXILIARY FUNCTIONS */
 
-static void process_file(TriePtr trie,char *argument) {
+static void process_file(TriePtr trie, char *argument) {
     if(trie_bulk_insert(trie, argument) == OK_BULK) {
         printf("[OK] Successfully inserted words from: %s\n", argument);
         processing = true;
     } else {
         printf("Error while processing file: %s\n", argument);
     }
+}
+
+static void process_folder(TriePtr trie, char *argument) {
+    printf("Reading files inside directory %s ...\n", argument);
+        DIR *dir;
+        struct dirent *ent;
+        if( (dir = opendir(argument)) != NULL) {
+            while((ent = readdir(dir)) != NULL) {
+                char *filename = ent->d_name;
+                if(strcmp(filename, ".") != 0 && strcmp(filename, "..") != 0) {
+                    char* path = malloc(strlen(argument) + strlen(ent->d_name + 1 + 1));
+                    strcpy(path, argument);
+                    strcat(path, "/");
+                    strcat(path, ent->d_name);
+                    if(type_of_file(path) == REGULAR_FILE) process_file(trie, path);
+                    free(path);
+                }
+            }
+        }
+
+        printf("Done.\n\n");
 }
