@@ -30,7 +30,7 @@ struct arguments {
 static int parse_opt(int key, char *arg, struct argp_state *state) {
     struct arguments *a = state->input;
     switch(key) {
-        case 'r': recursive = true; printf("TODO: recursive\n"); break;
+        case 'r': recursive = true; break;
         case 'f': follow = true; printf("TODO: follow\n"); break;
         case 'e': printf("TOOD: exclude -> %s\n", arg); break;
         case 'a': alpha = true; printf("TODO: alpha\n"); break;
@@ -151,11 +151,12 @@ static void process_folder(TriePtr trie, char *argument) {
             while((ent = readdir(dir)) != NULL) {
                 char *filename = ent->d_name;
                 if(strcmp(filename, ".") != 0 && strcmp(filename, "..") != 0) {
-                    char* path = malloc(strlen(argument) + strlen(ent->d_name + 1 + 1));
+                    char* path = malloc(strlen(argument) + strlen(ent->d_name + 1 + 1)); check_heap(path);
                     strcpy(path, argument);
                     strcat(path, "/");
                     strcat(path, ent->d_name);
                     if(type_of_file(path) == REGULAR_FILE) process_file(trie, path);
+                    if(type_of_file(path) == DIRECTORY && recursive == true) process_folder(trie, path);
                     free(path);
                 }
             }
