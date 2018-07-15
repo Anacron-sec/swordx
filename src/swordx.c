@@ -2,15 +2,11 @@
 #include <argp.h>
 #include <argz.h>
 #include <stdbool.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include <dirent.h>
 #include "utils.h"
 #include "trie.h"
 
-typedef enum {ERROR_TYPE = -1, OTHER , REGULAR_FILE, DIRECTORY} fileType;
-
-static fileType type_of_file(char *);
+static void process_file(TriePtr, char *);
 
 bool sort_by_occurences = false;
 bool recursive = false;
@@ -23,7 +19,7 @@ bool processing = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 0.1.4";
+const char *argp_program_version = "SwordX version 0.2.0";
 
 struct arguments {
     char *argz;
@@ -109,11 +105,26 @@ int main(int argc, char **argv)
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             //TODO Regexp interpreter
             if(type_of_file(argument) == REGULAR_FILE) {
-                trie_bulk_insert(trie, argument) == OK_BULK ? 
-                    printf("[OK] Successfully inserted words from: %s\n", argument) : printf("Error while processing: %s\n", argument);
-                processing = true;
+                process_file(trie, argument);
             } else if (type_of_file(argument) == DIRECTORY) {
-                printf("[ERROR] %s: Directory processing is currently not supported\n", argument);
+                printf("Reading files inside directory %s ...\n", argument);
+                DIR *dir;
+                struct dirent *ent;
+                if( (dir = opendir(argument)) != NULL) {
+                    while((ent = readdir(dir)) != NULL) {
+                        char *filename = ent->d_name;
+                        if(strcmp(filename, ".") != 0 && strcmp(filename, "..") != 0) {
+                            char* path = malloc(strlen(argument) + strlen(ent->d_name + 1 + 1));
+                            strcpy(path, argument);
+                            strcat(path, "/");
+                            strcat(path, ent->d_name);
+                            if(type_of_file(path) == REGULAR_FILE) process_file(trie, path);
+                            free(path);
+                        }
+                    }
+                }
+
+                printf("Done.\n\n");
             } else if (type_of_file(argument) == OTHER) {
                 printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument);
             } else {
@@ -137,12 +148,13 @@ int main(int argc, char **argv)
     exit(EXIT_SUCCESS);
 }
 
-static fileType type_of_file(char * path) {
-    struct stat statbuf;
-    if (stat(path, &statbuf) != 0)
-       return ERROR_TYPE;
-    
-    if(S_ISDIR(statbuf.st_mode)) return DIRECTORY;
-    if(S_ISREG(statbuf.st_mode)) return REGULAR_FILE;
-    return OTHER;
+/* AUXILIARY FUNCTIONS */
+
+static void process_file(TriePtr trie,char *argument) {
+    if(trie_bulk_insert(trie, argument) == OK_BULK) {
+        printf("[OK] Successfully inserted words from: %s\n", argument);
+        processing = true;
+    } else {
+        printf("Error while processing file: %s\n", argument);
+    }
 }
