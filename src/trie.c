@@ -119,7 +119,7 @@ bulkInsertStatus trie_bulk_insert(TriePtr trie, char *file_name) {
         char* token;
         char* save;
 
-        line[strlen(line) - 1] = '\0'; // Strips \n from line
+        if(line[strlen(line) - 1] == '\n') line[strlen(line) - 1] = '\0'; // Strips \n from line
 
         token = strtok_r(line, " ", &save);
 
