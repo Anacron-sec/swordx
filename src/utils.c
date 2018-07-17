@@ -33,7 +33,7 @@ bool isSymlink(char * path) {
 }
 
 void print_logo(void) {
-    printf("\n\n\n");
+    printf("\n");
     printf(" n                                                                  :.\n");
     printf(" E%%                                                                :\"5\n");
     printf("z  %%                                                              :\" `\n");
@@ -67,12 +67,11 @@ void print_logo(void) {
     printf("             z$RRM8F\"                             \"N8@M$bL\n");
     printf("            5`RM$#                                  'R88f)R\n");
     printf("            'h.$\"                                     #$x*\n\n\n");
-    printf("\n\n");
 }
 
 
 void print_pirate_logo(void) {
-    printf("\n\n\n");
+    printf("\n");
     printf("                                .xm*f""??T?@hc.\n");
     printf("                          z@\"` '~((!!!!!!!?*m.\n");
     printf("                        z$$$K   ~~(/!!!!!!!!!Mh\n");
@@ -114,5 +113,4 @@ void print_pirate_logo(void) {
     printf("             z$RRM8F\"       Pirate Edition        \"N8@M$bL\n");
     printf("            5`RM$#                                  'R88f)R\n");
     printf("            'h.$\"                                     #$x*\n\n\n");
-    printf("\n\n");
 }
