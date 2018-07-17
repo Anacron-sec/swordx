@@ -12,21 +12,22 @@ static void process_folder(TriePtr, char *);
 static char** add_file_to_blacklist(char**, char *);
 static char** add_words_to_blacklist(char**, char *);
 
+// Variables relative to file options
 bool sort_by_occurences = false;
 bool recursive = false;
 bool follow = false;
+char **file_blacklist = NULL;
+size_t file_blacklist_size = 0;
 
+// Variables relative to word options
 extern bool alpha;
 extern long int min_chars;
 extern char **word_blacklist;
 extern size_t word_blacklist_size;
 
-char **file_blacklist = NULL;
-size_t file_blacklist_size = 0;
 
 /* Used to track if the program found at least one file to process */
 bool processing = false;
-
 
 char *output_file = "swordx.out";
 
@@ -169,23 +170,20 @@ static void process_file(TriePtr trie, char *argument) {
         printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
         return;
     }
-
-    bool file_is_blacklisted = false;
     
     /* Checks if file is blacklised */
     for(int i = 0; i < file_blacklist_size ; i++) {
-        if(strcmp(argument, file_blacklist[i]) == 0) file_is_blacklisted = true;
+        if(strcmp(argument, file_blacklist[i]) == 0) {
+            printf("[SKIP] File %s is blacklisted\n", argument);
+            return;
+        }
     }
 
-    if(!file_is_blacklisted) {
-        if(trie_bulk_insert(trie, argument) == OK_BULK) {
-            printf("[OK] Successfully inserted words from: %s\n", argument);
-            processing = true;
-        } else {
-            printf("[ERROR] You don't have permission to read file %s\n", argument);
-        }
+    if(trie_bulk_insert(trie, argument) == OK_BULK) {
+        printf("[OK] Successfully inserted words from: %s\n", argument);
+        processing = true;
     } else {
-        printf("[SKIP] File %s is blacklisted\n", argument);
+        printf("[ERROR] You don't have permission to read file %s\n", argument);
     }
 }
 
