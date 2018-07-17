@@ -129,7 +129,7 @@ int main(int argc, char **argv)
             glob(argument, 0, NULL, &paths);
             if(paths.gl_pathc > 0) {
                 for (int i = 0; i < paths.gl_pathc; i++) {
-                    
+
                     if(isSymlink(argument) == true && follow == false) {
                         printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
                     } else {

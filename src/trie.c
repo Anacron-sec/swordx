@@ -103,10 +103,10 @@ size_t get_count(TriePtr trie) {
 
 writeStatus write_trie(TriePtr trie, char *file_name) {
     FILE *fptr = fopen(file_name,"w");
+    
     if(fptr == NULL)
-    {
         return ERROR_WRITE;
-    }
+
     write_words_to_file(trie->root_node, fptr);
     fclose(fptr);
     return OK_WRITE;
@@ -114,9 +114,9 @@ writeStatus write_trie(TriePtr trie, char *file_name) {
 
 writeStatus write_trie_by_occurrences(TriePtr trie, char *file_name) {
     FILE *fptr = fopen(file_name, "w");
-    if(fptr == NULL) {
+    
+    if(fptr == NULL)
         return ERROR_WRITE;
-    }
 
     WordWithOccurrencesPtr* wwo_ptr = sort_trie_by_occurences(trie);
     for(int i=0; i < trie->word_count; i++) {
