@@ -30,7 +30,7 @@ bool processing = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 1.4.0";
+const char *argp_program_version = "SwordX version 1.4.1";
 
 struct arguments {
     char *argz;
@@ -236,10 +236,6 @@ static char** add_words_to_blacklist(char** blacklist, char *file_name) {
         tmp_blacklist = realloc(tmp_blacklist, (word_blacklist_size + 1) * sizeof(char*)); check_heap(tmp_blacklist);
         tmp_blacklist[word_blacklist_size] = (char*) malloc(strlen(line)); check_heap(tmp_blacklist[word_blacklist_size]);
         strcpy(tmp_blacklist[word_blacklist_size], line);
-
-        for(int i = 0; i < word_blacklist_size + 1; i++) {
-            printf("\n[%d] %s\n",i, tmp_blacklist[i]);
-        }
 
         word_blacklist_size++;
     }
