@@ -16,6 +16,7 @@ bool follow = false;
 bool alpha = false;
 
 char **file_blacklist = NULL;
+size_t file_blacklist_size = 0;
 
 bool processing = false;
 
@@ -185,14 +186,14 @@ static void process_folder(TriePtr trie, char *argument) {
 
 static char** add_file_to_blacklist(char** blacklist, char *file) {
     char **tmp_blacklist = blacklist;
-    static int file_blacklist_index = 0;
-
-    tmp_blacklist = realloc(blacklist, (file_blacklist_index + 1)*sizeof(char*));
-    if(tmp_blacklist != NULL) {
-        tmp_blacklist[file_blacklist_index] = (char*) malloc(strlen(file));
-        strcpy(tmp_blacklist[file_blacklist_index], file);
-    }
     
-    file_blacklist_index++;
+
+    tmp_blacklist = realloc(blacklist, (file_blacklist_size + 1)*sizeof(char*));
+    if(tmp_blacklist != NULL) {
+        tmp_blacklist[file_blacklist_size] = (char*) malloc(strlen(file));
+        strcpy(tmp_blacklist[file_blacklist_size], file);
+    }
+
+    file_blacklist_size++;
     return tmp_blacklist;
 }
