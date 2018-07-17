@@ -8,11 +8,14 @@
 
 static void process_file(TriePtr, char *);
 static void process_folder(TriePtr, char *);
+static char** add_file_to_blacklist(char**, char *);
 
 bool sort_by_occurences = false;
 bool recursive = false;
 bool follow = false;
 bool alpha = false;
+
+char **file_blacklist = NULL;
 
 bool processing = false;
 
@@ -32,7 +35,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
     switch(key) {
         case 'r': recursive = true; break;
         case 'f': follow = true; break;
-        case 'e': printf("TOOD: exclude -> %s\n", arg); break;
+        case 'e': file_blacklist = add_file_to_blacklist(file_blacklist, arg); break;
         case 'a': alpha = true; printf("TODO: alpha\n"); break;
         case 'm': {
             long num = strtoul(arg, NULL, 10);
@@ -69,7 +72,7 @@ int main(int argc, char **argv)
         { 0, 0, 0, 0, "Files and folders options:", 1},
         {"recursive", 'r', 0, 0, "Follows subdirectories during file processing."},
         {"follow", 'f', 0, 0, "Follows links."},
-        {"exclude", 'e', "<file>", OPTION_HIDDEN, "The specified file is not used for processing."},
+        {"exclude", 'e', "<file>", 0, "The specified file is not used for processing."},
 
         { 0, 0, 0, 0, "Words options:", 2},
         {"alpha", 'a', 0, OPTION_HIDDEN, "Treats only words with alphabet characters."},
@@ -95,7 +98,6 @@ int main(int argc, char **argv)
     // Creates trie to hold words
     TriePtr trie;
 
-    // Processes arguments one by one
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
         
         /* Creates a trie to store words */
@@ -103,6 +105,8 @@ int main(int argc, char **argv)
 
         const char *prev = NULL;
         char *argument;
+
+        // Processes arguments one by one
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             //TODO Regexp interpreter
             
@@ -146,7 +150,7 @@ static void process_file(TriePtr trie, char *argument) {
         printf("[OK] Successfully inserted words from: %s\n", argument);
         processing = true;
     } else {
-        printf("[ERROR]Error while processing file: %s\n", argument);
+        printf("[ERROR] Error while processing file: %s\n", argument);
     }
 }
 
@@ -177,4 +181,18 @@ static void process_folder(TriePtr trie, char *argument) {
         }
 
         printf("Done.\n\n");
+}
+
+static char** add_file_to_blacklist(char** blacklist, char *file) {
+    char **tmp_blacklist = blacklist;
+    static int file_blacklist_index = 0;
+
+    tmp_blacklist = realloc(blacklist, (file_blacklist_index + 1)*sizeof(char*));
+    if(tmp_blacklist != NULL) {
+        tmp_blacklist[file_blacklist_index] = (char*) malloc(strlen(file));
+        strcpy(tmp_blacklist[file_blacklist_index], file);
+    }
+    
+    file_blacklist_index++;
+    return tmp_blacklist;
 }
