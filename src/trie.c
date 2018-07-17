@@ -13,7 +13,7 @@ static const char BASE_DIGIT = '0';
 static const char BASE_CHAR = 'a';
 static const int CHAR_OFFSET = 10;
 
-extern bool alpha;
+bool alpha = false;
 
 struct TrieNode {
     struct TrieNode *next[CHARSET];
@@ -139,6 +139,7 @@ bulkInsertStatus trie_bulk_insert(TriePtr trie, char *file_name) {
 
     return OK_BULK;
 }
+
 
 static void write_words_to_file(struct TrieNode* node, FILE* file_pointer) {
     if (node->occurrences > 0) {

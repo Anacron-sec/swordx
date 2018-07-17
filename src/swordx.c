@@ -13,7 +13,7 @@ static char** add_file_to_blacklist(char**, char *);
 bool sort_by_occurences = false;
 bool recursive = false;
 bool follow = false;
-bool alpha = false;
+extern bool alpha;
 
 char **file_blacklist = NULL;
 size_t file_blacklist_size = 0;
