@@ -18,7 +18,7 @@ bool follow = false;
 extern bool alpha;
 extern long int min_chars;
 extern char **word_blacklist;
-extern long word_blacklist_size;
+extern size_t word_blacklist_size;
 
 char **file_blacklist = NULL;
 size_t file_blacklist_size = 0;
