@@ -34,7 +34,7 @@ bool easter_egg = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 1.0.0-rc1";
+const char *argp_program_version = "SwordX version 1.0.0-rc2";
 
 struct arguments {
     char *argz;
