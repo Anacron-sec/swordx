@@ -18,13 +18,14 @@ bool alpha = false;
 char **file_blacklist = NULL;
 size_t file_blacklist_size = 0;
 
+/* Used to track if the program found at least one file to process */
 bool processing = false;
 
 
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 1.0.0";
+const char *argp_program_version = "SwordX version 1.1.0";
 
 struct arguments {
     char *argz;
@@ -109,8 +110,10 @@ int main(int argc, char **argv)
 
         // Processes arguments one by one
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
+            prev = argument;
+
             //TODO Regexp interpreter
-            
+
             if(type_of_file(argument) == REGULAR_FILE) {
                 process_file(trie, argument);
             } else if (type_of_file(argument) == DIRECTORY) {
@@ -121,7 +124,6 @@ int main(int argc, char **argv)
                 printf("[ERROR] %s: You don't have permissions to read or the file doesn't exist.\n", argument);
             }
             
-            prev = argument;
         }
 
         free (arguments.argz);
@@ -147,11 +149,22 @@ static void process_file(TriePtr trie, char *argument) {
         return;
     }
 
-    if(trie_bulk_insert(trie, argument) == OK_BULK) {
-        printf("[OK] Successfully inserted words from: %s\n", argument);
-        processing = true;
+    bool file_is_blacklisted = false;
+    
+    /* Checks if file is blacklised */
+    for(int i = 0; i < file_blacklist_size ; i++) {
+        if(strcmp(argument, file_blacklist[i]) == 0) file_is_blacklisted = true;
+    }
+
+    if(!file_is_blacklisted) {
+        if(trie_bulk_insert(trie, argument) == OK_BULK) {
+            printf("[OK] Successfully inserted words from: %s\n", argument);
+            processing = true;
+        } else {
+            printf("[ERROR] Error while processing file: %s\n", argument);
+        }
     } else {
-        printf("[ERROR] Error while processing file: %s\n", argument);
+        printf("[SKIP] File %s is blacklisted\n", argument);
     }
 }
 
