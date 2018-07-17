@@ -13,7 +13,9 @@ static char** add_file_to_blacklist(char**, char *);
 bool sort_by_occurences = false;
 bool recursive = false;
 bool follow = false;
+
 extern bool alpha;
+extern long int min_chars;
 
 char **file_blacklist = NULL;
 size_t file_blacklist_size = 0;
@@ -25,7 +27,7 @@ bool processing = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 1.2.0";
+const char *argp_program_version = "SwordX version 1.3.0";
 
 struct arguments {
     char *argz;
@@ -41,7 +43,12 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case 'a': alpha = true; break;
         case 'm': {
             long num = strtoul(arg, NULL, 10);
-            num ? printf("TODO: minimum -> %ld \n", num) : printf("TOOD: minimum:invalid");
+            if(num) 
+                min_chars = num;
+            else {
+                printf("Error in option -m : %s is not a valid number.\n", arg);
+                exit(EXIT_FAILURE);
+            }
         } break;
         case 'i': printf("TODO: ignore -> %s\n", arg); break;
         case 's': sort_by_occurences = true; break;

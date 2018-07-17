@@ -14,6 +14,7 @@ static const char BASE_CHAR = 'a';
 static const int CHAR_OFFSET = 10;
 
 bool alpha = false;
+long int min_chars = 0;
 
 struct TrieNode {
     struct TrieNode *next[CHARSET];
@@ -52,6 +53,10 @@ void destroy_trie(TriePtr trie) {
 }
 
 insertStatus trie_insert(TriePtr trie, char* new_string) {
+
+    if(min_chars != 0 && strlen(new_string) < min_chars)
+        return ERROR_INSERT;
+
     struct TrieNode *tmp_node = trie->root_node;
     char *query_next = new_string;
     int next_position = 0;
