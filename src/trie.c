@@ -15,6 +15,8 @@ static const int CHAR_OFFSET = 10;
 
 bool alpha = false;
 long int min_chars = 0;
+char** word_blacklist = NULL;
+size_t word_blacklist_size = 0;
 
 struct TrieNode {
     struct TrieNode *next[CHARSET];
@@ -141,6 +143,7 @@ bulkInsertStatus trie_bulk_insert(TriePtr trie, char *file_name) {
             token = strtok_r(NULL, " ", &save);
         }
     }
+    fclose(fptr);
 
     return OK_BULK;
 }
@@ -148,7 +151,18 @@ bulkInsertStatus trie_bulk_insert(TriePtr trie, char *file_name) {
 
 static void write_words_to_file(struct TrieNode* node, FILE* file_pointer) {
     if (node->occurrences > 0) {
-        fprintf(file_pointer,"%s %d\n",node->stored_word, node->occurrences);
+        bool word_is_blacklisted = false;
+
+        // Checks if the word is blacklisted.
+        for(int i = 0; i < word_blacklist_size; i++) {
+            if(strcmp(word_blacklist[i], node->stored_word) == 0) {
+              word_is_blacklisted = true;
+              break;  
+            } 
+        }
+
+        if(!word_is_blacklisted)
+            fprintf(file_pointer,"%s %d\n",node->stored_word, node->occurrences);
     }
 
     // Recursively calls for entire trie

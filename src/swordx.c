@@ -9,6 +9,7 @@
 static void process_file(TriePtr, char *);
 static void process_folder(TriePtr, char *);
 static char** add_file_to_blacklist(char**, char *);
+static char** add_words_to_blacklist(char**, char *);
 
 bool sort_by_occurences = false;
 bool recursive = false;
@@ -16,6 +17,8 @@ bool follow = false;
 
 extern bool alpha;
 extern long int min_chars;
+extern char **word_blacklist;
+extern long word_blacklist_size;
 
 char **file_blacklist = NULL;
 size_t file_blacklist_size = 0;
@@ -27,7 +30,7 @@ bool processing = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 1.3.1";
+const char *argp_program_version = "SwordX version 1.4.0";
 
 struct arguments {
     char *argz;
@@ -50,7 +53,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
                 exit(EXIT_FAILURE);
             }
         } break;
-        case 'i': printf("TODO: ignore -> %s\n", arg); break;
+        case 'i': word_blacklist = add_words_to_blacklist(word_blacklist, arg); break;
         case 's': sort_by_occurences = true; break;
         case 'o': {
             output_file = (char *) malloc((strlen(arg) + 1)*sizeof(char)); check_heap(output_file);
@@ -86,7 +89,7 @@ int main(int argc, char **argv)
         { 0, 0, 0, 0, "Words options:", 2},
         {"alpha", 'a', 0, 0, "Treats only words with alphabet characters."},
         {"min", 'm', "<num>", 0, "Only words with a minimum length of <num> are processed."},
-        {"ignore", 'i', "<file>", OPTION_HIDDEN, "Uses target file as a blacklist (words must be written one per line)."},
+        {"ignore", 'i', "<file>", 0, "Uses target file as a blacklist (words must be written one per line)."},
         {"sortbyoccurrences", 's', 0, 0, "Words inserted in the output file are sorted by occurences."},
 
         { 0, 0, 0, 0, "Output Options:", 3},
@@ -206,15 +209,42 @@ static void process_folder(TriePtr trie, char *argument) {
 }
 
 static char** add_file_to_blacklist(char** blacklist, char *file) {
-    char **tmp_blacklist = blacklist;
+    char **tmp_blacklist;
     
-
-    tmp_blacklist = realloc(blacklist, (file_blacklist_size + 1)*sizeof(char*));
-    if(tmp_blacklist != NULL) {
-        tmp_blacklist[file_blacklist_size] = (char*) malloc(strlen(file));
-        strcpy(tmp_blacklist[file_blacklist_size], file);
-    }
+    tmp_blacklist = realloc(blacklist, (file_blacklist_size + 1)*sizeof(char*)); check_heap(tmp_blacklist);
+    tmp_blacklist[file_blacklist_size] = (char*) malloc(strlen(file)); check_heap(tmp_blacklist[file_blacklist_size]);
+    strcpy(tmp_blacklist[file_blacklist_size], file);
 
     file_blacklist_size++;
+    return tmp_blacklist;
+}
+
+static char** add_words_to_blacklist(char** blacklist, char *file_name) {
+    char **tmp_blacklist = blacklist;
+    
+    FILE *fptr = fopen(file_name, "r");
+    if(fptr == NULL) {
+        printf("Error in option -i Couldn't open file %s\n", file_name);
+        exit(EXIT_FAILURE);
+    }
+
+    char *line = NULL;
+    size_t len = 0;
+    while(getline(&line, &len, fptr) != -1) {
+
+        if(line[strlen(line) - 1] == '\n') line[strlen(line) - 1] = '\0'; // Strips \n from line
+        tmp_blacklist = realloc(tmp_blacklist, (word_blacklist_size + 1) * sizeof(char*)); check_heap(tmp_blacklist);
+        tmp_blacklist[word_blacklist_size] = (char*) malloc(strlen(line)); check_heap(tmp_blacklist[word_blacklist_size]);
+        strcpy(tmp_blacklist[word_blacklist_size], line);
+
+        for(int i = 0; i < word_blacklist_size + 1; i++) {
+            printf("\n[%d] %s\n",i, tmp_blacklist[i]);
+        }
+
+        word_blacklist_size++;
+    }
+    
+    fclose(fptr);
+
     return tmp_blacklist;
 }
