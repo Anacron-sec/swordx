@@ -4,7 +4,7 @@ stages:
 
 build:
   stage: build  
-  image: gcc:8
+  image: gcc:6.4.0
   script:
     - make
 
