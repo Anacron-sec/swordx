@@ -114,14 +114,15 @@ int main(int argc, char **argv)
 
             //TODO Regexp interpreter
 
-            if(type_of_file(argument) == REGULAR_FILE) {
-                process_file(trie, argument);
-            } else if (type_of_file(argument) == DIRECTORY) {
-                process_folder(trie, argument);
-            } else if (type_of_file(argument) == OTHER) {
-                printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument);
-            } else {
-                printf("[ERROR] %s: You don't have permissions to read or the file doesn't exist.\n", argument);
+            switch(type_of_file(argument)) {
+                case REGULAR_FILE:
+                    process_file(trie, argument); break;
+                case DIRECTORY:
+                    process_folder(trie, argument); break;
+                case OTHER:
+                    printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument); break;
+                default:
+                    printf("[ERROR] %s: The file doesn't exist.\n", argument);
             }
             
         }
@@ -161,7 +162,7 @@ static void process_file(TriePtr trie, char *argument) {
             printf("[OK] Successfully inserted words from: %s\n", argument);
             processing = true;
         } else {
-            printf("[ERROR] Error while processing file: %s\n", argument);
+            printf("[ERROR] You don't have permission to read file %s\n", argument);
         }
     } else {
         printf("[SKIP] File %s is blacklisted\n", argument);
