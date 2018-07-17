@@ -140,11 +140,8 @@ int main(int argc, char **argv)
                             case DIRECTORY:
                                 process_folder(trie, argument); 
                                 break;
-                            case OTHER:
-                                printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument); 
-                                break;
                             default:
-                                printf("[ERROR] %s: The file doesn't exist.\n", argument);
+                                printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument);
                         }
                     }
                 }
