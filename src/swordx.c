@@ -3,6 +3,7 @@
 #include <argz.h>
 #include <stdbool.h>
 #include <dirent.h>
+#include <glob.h>
 #include "utils.h"
 #include "trie.h"
 
@@ -122,18 +123,27 @@ int main(int argc, char **argv)
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             prev = argument;
 
-            //TODO Regexp interpreter
+            glob_t paths;
 
-            switch(type_of_file(argument)) {
-                case REGULAR_FILE:
-                    process_file(trie, argument); break;
-                case DIRECTORY:
-                    process_folder(trie, argument); break;
-                case OTHER:
-                    printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument); break;
-                default:
-                    printf("[ERROR] %s: The file doesn't exist.\n", argument);
+            glob(argument, 0, NULL, &paths);
+            if(paths.gl_pathc > 0) {
+                for (int i = 0; i < paths.gl_pathc; i++) {
+                switch(type_of_file(argument)) {
+                    case REGULAR_FILE:
+                        process_file(trie, argument); break;
+                    case DIRECTORY:
+                        process_folder(trie, argument); break;
+                    case OTHER:
+                        printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument); break;
+                    default:
+                        printf("[ERROR] %s: The file doesn't exist.\n", argument);
+                    }
+                }
+            } else {
+                printf("Nothing matches pattern: %s\n", argument);
             }
+
+            globfree(&paths);
             
         }
 
@@ -144,7 +154,7 @@ int main(int argc, char **argv)
         writeStatus ws = sort_by_occurences ? write_trie_by_occurrences(trie, output_file) : write_trie(trie, output_file);
         ws == OK_WRITE ? printf("\nResults saved in file %s\n", output_file) : printf("\nError while saving results.\n");
     } else {
-        printf("\nNothing to process.\n");
+        printf("\nNothing to do here.\n");
     }
     
     destroy_trie(trie);
