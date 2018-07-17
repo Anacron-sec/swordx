@@ -3,7 +3,6 @@
 #include <argz.h>
 #include <stdbool.h>
 #include <dirent.h>
-#include <glob.h>
 #include "utils.h"
 #include "trie.h"
 
@@ -31,6 +30,7 @@ bool processing = false;
 /* Used to print a very nice logo */
 bool easter_egg = false;
 
+/* Output filename, defaults to swordx.out */
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
@@ -129,32 +129,23 @@ int main(int argc, char **argv)
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             prev = argument;
 
-            glob_t paths;
-
-            glob(argument, 0, NULL, &paths);
-            if(paths.gl_pathc > 0) {
-                for (int i = 0; i < paths.gl_pathc; i++) {
-
-                    if(isSymlink(argument) == true && follow == false) {
-                        printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
-                    } else {
-                        switch(type_of_file(argument)) {
-                            case REGULAR_FILE:
-                                process_file(trie, argument); 
-                                break;
-                            case DIRECTORY:
-                                process_folder(trie, argument); 
-                                break;
-                            default:
-                                printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument);
-                        }
-                    }
-                }
+            if(isSymlink(argument) == true && follow == false) {
+                printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
             } else {
-                printf("Nothing matches pattern: %s\n", argument);
+                switch(type_of_file(argument)) {
+                    case REGULAR_FILE:
+                        process_file(trie, argument); 
+                        break;
+                    case DIRECTORY:
+                        process_folder(trie, argument); 
+                        break;
+                    case OTHER:
+                        printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument);
+                        break;
+                    default:
+                        printf("[ERROR] %s: No match found for this pattern.\n", argument);
+                }
             }
-
-            globfree(&paths);
             
         }
 
