@@ -129,15 +129,23 @@ int main(int argc, char **argv)
             glob(argument, 0, NULL, &paths);
             if(paths.gl_pathc > 0) {
                 for (int i = 0; i < paths.gl_pathc; i++) {
-                switch(type_of_file(argument)) {
-                    case REGULAR_FILE:
-                        process_file(trie, argument); break;
-                    case DIRECTORY:
-                        process_folder(trie, argument); break;
-                    case OTHER:
-                        printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument); break;
-                    default:
-                        printf("[ERROR] %s: The file doesn't exist.\n", argument);
+                    
+                    if(isSymlink(argument) == true && follow == false) {
+                        printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
+                    } else {
+                        switch(type_of_file(argument)) {
+                            case REGULAR_FILE:
+                                process_file(trie, argument); 
+                                break;
+                            case DIRECTORY:
+                                process_folder(trie, argument); 
+                                break;
+                            case OTHER:
+                                printf("[ERROR] %s: Processing of this type of file is currently not supported.\n", argument); 
+                                break;
+                            default:
+                                printf("[ERROR] %s: The file doesn't exist.\n", argument);
+                        }
                     }
                 }
             } else {
@@ -166,11 +174,6 @@ int main(int argc, char **argv)
 
 static void process_file(TriePtr trie, char *argument) {
     
-    if(isSymlink(argument) == true && follow == false) {
-        printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
-        return;
-    }
-    
     /* Checks if file is blacklised */
     for(int i = 0; i < file_blacklist_size ; i++) {
         if(strcmp(argument, file_blacklist[i]) == 0) {
@@ -188,11 +191,6 @@ static void process_file(TriePtr trie, char *argument) {
 }
 
 static void process_folder(TriePtr trie, char *argument) {
-
-    if(isSymlink(argument) == true && follow == false) {
-        printf("[SKIP] Skipping \"%s\", use -f or --follow to follow symbolic links\n", argument);
-        return;
-    }
 
     printf("Reading files inside directory %s ...\n", argument);
         DIR *dir;
