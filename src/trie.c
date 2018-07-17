@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "trie.h"
 #include "utils.h"
 #include "word_utils.h"
@@ -12,6 +13,7 @@ static const char BASE_DIGIT = '0';
 static const char BASE_CHAR = 'a';
 static const int CHAR_OFFSET = 10;
 
+extern bool alpha;
 
 struct TrieNode {
     struct TrieNode *next[CHARSET];
@@ -56,6 +58,12 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
 
     while(*query_next != '\0') {
         next_position = map_char(*query_next);
+
+        /* checks if alpha are allowed */
+        if(next_position >= 0 && next_position <= 9 && alpha == true) {
+            return ERROR_INSERT;
+        } //TODO: Clean tree or check before
+
         /* If not a word return error */
         if(next_position == -1) return ERROR_INSERT; //TODO: Clean tree or check before
         if(tmp_node->next[next_position] == NULL)

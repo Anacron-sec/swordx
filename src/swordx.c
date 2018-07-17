@@ -38,7 +38,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case 'r': recursive = true; break;
         case 'f': follow = true; break;
         case 'e': file_blacklist = add_file_to_blacklist(file_blacklist, arg); break;
-        case 'a': alpha = true; printf("TODO: alpha\n"); break;
+        case 'a': alpha = true; break;
         case 'm': {
             long num = strtoul(arg, NULL, 10);
             num ? printf("TODO: minimum -> %ld \n", num) : printf("TOOD: minimum:invalid");
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
         {"exclude", 'e', "<file>", 0, "The specified file is not used for processing."},
 
         { 0, 0, 0, 0, "Words options:", 2},
-        {"alpha", 'a', 0, OPTION_HIDDEN, "Treats only words with alphabet characters."},
+        {"alpha", 'a', 0, 0, "Treats only words with alphabet characters."},
         {"min", 'm', "<num>", OPTION_HIDDEN, "Only words with a minimum length of <num> are processed."},
         {"ignore", 'i', "<file>", OPTION_HIDDEN, "Uses target file as a blacklist (words must be written one per line)."},
         {"sortbyoccurrences", 's', 0, 0, "Words inserted in the output file are sorted by occurences."},
