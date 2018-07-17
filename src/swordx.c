@@ -27,7 +27,7 @@ bool processing = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 1.3.0";
+const char *argp_program_version = "SwordX version 1.3.1";
 
 struct arguments {
     char *argz;
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 
         { 0, 0, 0, 0, "Words options:", 2},
         {"alpha", 'a', 0, 0, "Treats only words with alphabet characters."},
-        {"min", 'm', "<num>", OPTION_HIDDEN, "Only words with a minimum length of <num> are processed."},
+        {"min", 'm', "<num>", 0, "Only words with a minimum length of <num> are processed."},
         {"ignore", 'i', "<file>", OPTION_HIDDEN, "Uses target file as a blacklist (words must be written one per line)."},
         {"sortbyoccurrences", 's', 0, 0, "Words inserted in the output file are sorted by occurences."},
 
