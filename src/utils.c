@@ -32,223 +32,47 @@ bool isSymlink(char * path) {
     return S_ISLNK(statbuf.st_mode) ? true : false;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void pirate(void) {
+void print_logo(void) {
+    printf("\n\n\n");
+    printf(" n                                                                  :.\n");
+    printf(" E%%                                                                :\"5\n");
+    printf("z  %%                                                              :\" `\n");
+    printf("K   \":                                                           z   R\n");
+    printf("?     %%.                                                       :^    J\n");
+    printf(" \".    ^s                                                     f     :~\n");
+    printf("  '+.    #L                                                 z\"    .*\n");
+    printf("    '+     %%L                                             z\"    .~\n");
+    printf("      \":    '%%.                                         .#     +\n");
+    printf("        \":    ^%%.                                     .#`    +\"\n");
+    printf("          #:    \"n                                  .+`   .z\"\n");
+    printf("            #:    \":                               z`    +\"\n");
+    printf("              %%:   `*L                           z\"    z\"\n");
+    printf("                *:   ^*L                       z*   .+\"\n");
+    printf("                  \"s   ^*L                   z#   .*\"\n");
+    printf("                    #s   ^%%L               z#   .*\"\n");
+    printf("                      #s   ^%%L           z#   .r\"\n");
+    printf("                        #s   ^%%.       u#   .r\"\n");
+    printf("                          #i   '%%.   u#   .@\"\n");
+    printf("                            #s   ^%%u#   .@\"\n");
+    printf("                              #s x#   .*\"\n");
+    printf("                               x#`  .@%%.\n");
+    printf("                             x#`  .d\"  \"%%.\n");
+    printf("                           xf~  .r\" #s   \"%%.\n");
+    printf("                     u   x*`  .r\"     #s   \"%%.  x.\n");
+    printf("                     %%Mu*`  x*\"         #m.  \"%%zX\n");
+    printf("                     :R(h x*              \"h..*dN.\n");
+    printf("                   u@NM5e#>                 7?dMRMh.\n");
+    printf("                 z$@M@$#\"#\"                 *\"\"*@MM$hL\n");
+    printf("               u@@MM8*          SwordX          \"*$M@Mh.\n");
+    printf("             z$RRM8F\"                             \"N8@M$bL\n");
+    printf("            5`RM$#                                  'R88f)R\n");
+    printf("            'h.$\"                                     #$x*\n\n\n");
+    printf("\n\n");
+}
+
+
+void print_pirate_logo(void) {
+    printf("\n\n\n");
     printf("                                .xm*f""??T?@hc.\n");
     printf("                          z@\"` '~((!!!!!!!?*m.\n");
     printf("                        z$$$K   ~~(/!!!!!!!!!Mh\n");

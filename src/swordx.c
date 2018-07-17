@@ -25,9 +25,11 @@ extern long int min_chars;
 extern char **word_blacklist;
 extern size_t word_blacklist_size;
 
-
 /* Used to track if the program found at least one file to process */
 bool processing = false;
+
+/* Used to print a very nice logo */
+bool easter_egg = false;
 
 char *output_file = "swordx.out";
 
@@ -61,7 +63,8 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
             output_file = (char *) malloc((strlen(arg) + 1)*sizeof(char)); check_heap(output_file);
             strcpy(output_file, arg);
         } break;
-                                                                                                                                                                                                                                                                                                                                                                         case 1337: pirate(); break;
+        case 1337: easter_egg = true; break;
+
         /* Main arguments */
         case ARGP_KEY_INIT: {
             a->argz = 0;
@@ -97,7 +100,7 @@ int main(int argc, char **argv)
         { 0, 0, 0, 0, "Output Options:", 3},
         {"output", 'o', "<file>", 0,"Sets the name of the output file."},
 
-                                                                                                                                                                                                                                                                                                                                                                        {"pirate", 1337, 0, OPTION_HIDDEN, "海盜"},
+        {"pirate", 1337, 0, OPTION_HIDDEN, "海盜"},
         
         { 0, 0, 0, 0, "Informational Options:", -1},
         {0}
@@ -113,6 +116,8 @@ int main(int argc, char **argv)
     TriePtr trie;
 
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
+
+        easter_egg ? print_pirate_logo() : print_logo();
         
         /* Creates a trie to store words */
         trie = create_trie();
