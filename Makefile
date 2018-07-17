@@ -24,10 +24,14 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 all: swordx
 
 install:
-	cp ./bin/swordx /usr/local/bin/swordx
+	@echo "Installing swordx....\n"
+	@cp ./bin/swordx /usr/local/bin/swordx
+	@echo "Done."
 
 uninstall:
-	rm -f /usr/local/bin/swordx
+	@echo "Uninstalling swordx..\n"
+	@rm -f /usr/local/bin/swordx
+	@echo "Done."
 
 test:
 	make -C test && test/bin/test
