@@ -18,12 +18,6 @@ bool follow = false;
 char **file_blacklist = NULL;
 size_t file_blacklist_size = 0;
 
-// Variables relative to word options
-extern bool alpha;
-extern long int min_chars;
-extern char **word_blacklist;
-extern size_t word_blacklist_size;
-
 /* Used to track if the program found at least one file to process */
 bool processing = false;
 
@@ -47,17 +41,17 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case 'r': recursive = true; break;
         case 'f': follow = true; break;
         case 'e': file_blacklist = add_file_to_blacklist(file_blacklist, arg); break;
-        case 'a': alpha = true; break;
+        case 'a': trie_mode_alpha = true; break;
         case 'm': {
             long num = strtoul(arg, NULL, 10);
             if(num) 
-                min_chars = num;
+                trie_min_wordlength = num;
             else {
                 printf("Error in option -m : %s is not a valid number.\n", arg);
                 exit(EXIT_FAILURE);
             }
         } break;
-        case 'i': word_blacklist = add_words_to_blacklist(word_blacklist, arg); break;
+        case 'i': trie_word_blacklist = add_words_to_blacklist(trie_word_blacklist, arg); break;
         case 's': sort_by_occurences = true; break;
         case 'o': {
             output_file = (char *) malloc((strlen(arg) + 1)*sizeof(char)); check_heap(output_file);
@@ -232,11 +226,11 @@ static char** add_words_to_blacklist(char** blacklist, char *file_name) {
     while(getline(&line, &len, fptr) != -1) {
 
         if(line[strlen(line) - 1] == '\n') line[strlen(line) - 1] = '\0'; // Strips \n from line
-        tmp_blacklist = realloc(tmp_blacklist, (word_blacklist_size + 1) * sizeof(char*)); check_heap(tmp_blacklist);
-        tmp_blacklist[word_blacklist_size] = (char*) malloc(strlen(line)); check_heap(tmp_blacklist[word_blacklist_size]);
-        strcpy(tmp_blacklist[word_blacklist_size], line);
+        tmp_blacklist = realloc(tmp_blacklist, (trie_word_blacklist_size + 1) * sizeof(char*)); check_heap(tmp_blacklist);
+        tmp_blacklist[trie_word_blacklist_size] = (char*) malloc(strlen(line)); check_heap(tmp_blacklist[trie_word_blacklist_size]);
+        strcpy(tmp_blacklist[trie_word_blacklist_size], line);
 
-        word_blacklist_size++;
+        trie_word_blacklist_size++;
     }
     
     fclose(fptr);
