@@ -55,7 +55,7 @@ void destroy_trie(TriePtr trie) {
 }
 
 insertStatus trie_insert(TriePtr trie, char* new_string) {
-
+    
     // Checks if the word is blacklisted.
     for(int i = 0; i < word_blacklist_size; i++) {
         if(strcmp(word_blacklist[i],new_string) == 0) return ERROR_INSERT;
@@ -87,7 +87,7 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
     }
     
     if(tmp_node->stored_word == NULL) {
-        tmp_node->stored_word = malloc(strlen(new_string) * sizeof(char)); check_heap(tmp_node->stored_word);
+        tmp_node->stored_word = malloc(strlen(new_string) + 1); check_heap(tmp_node->stored_word);
         strcpy(tmp_node->stored_word, new_string);
         trie->word_count++;
     }
