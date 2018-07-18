@@ -7,16 +7,17 @@
 #include "utils.h"
 #include "word_utils.h"
 
-#define CHARSET 36 // 10 digits + 26 alphabets
+#define CHARSET 36 // 10 digits + 26 trie_mode_alphabets
 
 static const char BASE_DIGIT = '0';
 static const char BASE_CHAR = 'a';
 static const int CHAR_OFFSET = 10;
 
-bool alpha = false;
-long int min_chars = 0;
-char** word_blacklist = NULL;
-size_t word_blacklist_size = 0;
+// Default options
+bool trie_mode_alpha = false;
+long int trie_min_wordlength = 0;
+char** trie_word_blacklist = NULL;
+size_t trie_word_blacklist_size = 0;
 
 struct TrieNode {
     struct TrieNode *next[CHARSET];
@@ -57,11 +58,11 @@ void destroy_trie(TriePtr trie) {
 insertStatus trie_insert(TriePtr trie, char* new_string) {
     
     // Checks if the word is blacklisted.
-    for(int i = 0; i < word_blacklist_size; i++) {
-        if(strcmp(word_blacklist[i],new_string) == 0) return ERROR_INSERT;
+    for(int i = 0; i < trie_word_blacklist_size; i++) {
+        if(strcmp(trie_word_blacklist[i],new_string) == 0) return ERROR_INSERT;
     }
 
-    if(min_chars != 0 && strlen(new_string) < min_chars)
+    if(trie_min_wordlength != 0 && strlen(new_string) < trie_min_wordlength)
         return ERROR_INSERT;
 
     struct TrieNode *tmp_node = trie->root_node;
@@ -71,8 +72,8 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
     while(*query_next != '\0') {
         next_position = map_char(*query_next);
 
-        /* checks if alpha are allowed */
-        if(next_position >= 0 && next_position <= 9 && alpha == true) {
+        /* checks if trie_mode_alpha are allowed */
+        if(next_position >= 0 && next_position <= 9 && trie_mode_alpha == true) {
             return ERROR_INSERT;
         } //TODO: Clean tree or check before
 
