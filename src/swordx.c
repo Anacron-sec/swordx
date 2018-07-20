@@ -118,7 +118,9 @@ int main(int argc, char **argv)
 
         easter_egg ? print_pirate_logo() : print_logo();
         printf("%s\nCopyright © Michele Biondi, Samuele Cucchi\n\n", argp_program_version);
-        
+
+        printf("Working on your request, this could take a few moments depending on file size...\n\n");
+
         /* Creates a trie to store words */
         trie = create_trie();
 
