@@ -63,7 +63,7 @@ void print_logo(void) {
     printf("                     :R(h x*              \"h..*dN.\n");
     printf("                   u@NM5e#>                 7?dMRMh.\n");
     printf("                 z$@M@$#\"#\"                 *\"\"*@MM$hL\n");
-    printf("               u@@MM8*          SwordX          \"*$M@Mh.\n");
+    printf("               u@@MM8*                          \"*$M@Mh.\n");
     printf("             z$RRM8F\"                             \"N8@M$bL\n");
     printf("            5`RM$#                                  'R88f)R\n");
     printf("            'h.$\"                                     #$x*\n\n\n");
@@ -109,8 +109,8 @@ void print_pirate_logo(void) {
     printf("                     :R(h x*              \"h..*dN.\n");
     printf("                   u@NM5e#>                 7?dMRMh.\n");
     printf("                 z$@M@$#\"#\"                 *\"\"*@MM$hL\n");
-    printf("               u@@MM8*          SwordX          \"*$M@Mh.\n");
-    printf("             z$RRM8F\"       Pirate Edition        \"N8@M$bL\n");
+    printf("               u@@MM8*                          \"*$M@Mh.\n");
+    printf("             z$RRM8F\"                             \"N8@M$bL\n");
     printf("            5`RM$#                                  'R88f)R\n");
     printf("            'h.$\"                                     #$x*\n\n\n");
 }
