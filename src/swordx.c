@@ -31,7 +31,7 @@ bool easter_egg = false;
 char *output_file = "swordx.out";
 
 const char *argp_program_bug_address = "michelebiondi01@gmail.com";
-const char *argp_program_version = "SwordX version 1.0.0-rc2";
+const char *argp_program_version = "SwordX version 1.0.0";
 
 struct arguments {
     char *argz;
@@ -114,7 +114,10 @@ int main(int argc, char **argv)
 
     if (argp_parse (&argp, argc, argv, 0, 0, &arguments) == 0) {
 
+        /* Print informations */
+
         easter_egg ? print_pirate_logo() : print_logo();
+        printf("%s\nCopyright © Michele Biondi, Samuele Cucchi\n\n", argp_program_version);
         
         /* Creates a trie to store words */
         trie = create_trie();
