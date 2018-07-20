@@ -3,8 +3,11 @@
 #include <argz.h>
 #include <stdbool.h>
 #include <dirent.h>
+#include <time.h>
 #include "utils.h"
 #include "trie.h"
+
+clock_t start, stop;
 
 static void process_file(TriePtr, char *);
 static void process_folder(TriePtr, char *);
@@ -119,6 +122,8 @@ int main(int argc, char **argv)
         const char *prev = NULL;
         char *argument;
 
+        start = clock();
+
         // Processes arguments one by one
         while ((argument = argz_next (arguments.argz, arguments.argz_len, prev))) {
             prev = argument;
@@ -149,6 +154,8 @@ int main(int argc, char **argv)
     if(processing) {
         writeStatus ws = sort_by_occurences ? write_trie_by_occurrences(trie, output_file) : write_trie(trie, output_file);
         ws == OK_WRITE ? printf("\nResults saved in file %s\n", output_file) : printf("\nError while saving results.\n");
+        stop = clock();
+        printf("Total time: ~%0.3lf seconds\n", ((double)(stop - start) / CLOCKS_PER_SEC) );
     } else {
         printf("\nNothing to do here.\n");
     }
