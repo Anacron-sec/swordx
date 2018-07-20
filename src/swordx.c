@@ -186,7 +186,8 @@ static void process_file(TriePtr trie, char *argument) {
 
 static void process_folder(TriePtr trie, char *argument) {
 
-    printf("Reading files inside directory %s ...\n", argument);
+    printf("\n===== INSIDE DIRECTORY: %s ======\n\n", argument);
+
         DIR *dir;
         struct dirent *ent;
         if( (dir = opendir(argument)) != NULL) {
@@ -205,7 +206,7 @@ static void process_folder(TriePtr trie, char *argument) {
             }
         }
 
-        printf("Done.\n\n");
+        printf("\n===== END OF DIRECTORY: %s ======\n", argument);
 }
 
 static char** add_file_to_blacklist(char** blacklist, char *file) {
