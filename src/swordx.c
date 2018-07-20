@@ -47,7 +47,7 @@ static int parse_opt(int key, char *arg, struct argp_state *state) {
         case 'a': trie_mode_alpha = true; break;
         case 'm': {
             long num = strtoul(arg, NULL, 10);
-            if(num) 
+            if(num > 0) 
                 trie_min_wordlength = num;
             else {
                 printf("Error in option -m : %s is not a valid number.\n", arg);

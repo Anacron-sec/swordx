@@ -9,7 +9,7 @@ typedef enum {ERROR_BULK = -1, OK_BULK} bulkInsertStatus;
 
 // Tuning options for trie
 bool trie_mode_alpha;
-long int trie_min_wordlength;
+unsigned long trie_min_wordlength;
 char** trie_word_blacklist;
 size_t trie_word_blacklist_size;
 

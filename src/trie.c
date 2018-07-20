@@ -15,7 +15,7 @@ static const int CHAR_OFFSET = 10;
 
 // Default options
 bool trie_mode_alpha = false;
-long int trie_min_wordlength = 0;
+unsigned long trie_min_wordlength = 0;
 char** trie_word_blacklist = NULL;
 size_t trie_word_blacklist_size = 0;
 
