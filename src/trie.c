@@ -9,6 +9,8 @@
 
 #define CHARSET 36 // 10 digits + 26 trie_mode_alphabets
 
+static const int LOWERCASE_OFFSET = 'a' - 'A';
+
 static const char BASE_DIGIT = '0';
 static const char BASE_CHAR = 'a';
 static const int CHAR_OFFSET = 10;
@@ -37,6 +39,7 @@ static void destroy_trie_nodes(struct TrieNode*);
 static void trie_to_WordWithOccurences_array(struct TrieNode*, WordWithOccurrencesPtr*, int*);
 static WordWithOccurrencesPtr* sort_trie_by_occurences(TriePtr);
 static void write_words_to_file(struct TrieNode*, FILE*);
+static void tolower_string(char*);
 
 TriePtr create_trie() {
     TriePtr trie = (TriePtr) malloc(sizeof(struct Trie)); check_heap(trie);
@@ -60,11 +63,14 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
     if(trie_min_wordlength != 0 && strlen(new_string) < trie_min_wordlength)
         return ERROR_INSERT;
 
-    // Checks if the word is blacklisted.
+    // Converts string to lowercase
+    tolower_string(new_string);
+
+    // Checks if the word is blacklisted prior to attempting to store it.
     for(int i = 0; i < trie_word_blacklist_size; i++) {
+        tolower_string(trie_word_blacklist[i]);
         if(strcmp(trie_word_blacklist[i],new_string) == 0) return ERROR_INSERT;
     }
-
 
     struct TrieNode *tmp_node = trie->root_node;
     char *query_next = new_string;
@@ -88,6 +94,7 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
         tmp_node = tmp_node->next[next_position];
         query_next++;
     }
+
     
     if(tmp_node->stored_word == NULL) {
         tmp_node->stored_word = malloc(strlen(new_string) + 1); check_heap(tmp_node->stored_word);
@@ -198,9 +205,7 @@ static int map_char(char c) {
     if(isdigit(c)) 
         return (c - BASE_DIGIT);
 
-    char lowercase = tolower(c);
-
-    return islower(lowercase) ? (lowercase - BASE_CHAR + CHAR_OFFSET) : -1;
+    return islower(c) ? (c - BASE_CHAR + CHAR_OFFSET) : -1;
 }
 
 static void destroy_trie_nodes(struct TrieNode* trie_node) {
@@ -221,5 +226,12 @@ static void trie_to_WordWithOccurences_array(struct TrieNode* trie_node, WordWit
     for (int i = 0; i < CHARSET; i++) {
         if(trie_node->next[i] != NULL)
             trie_to_WordWithOccurences_array(trie_node->next[i], wwo, counter);
+    }
+}
+
+static void tolower_string(char* string) {
+    for(int i = 0; i < strlen(string); i++) {
+        if( isupper(string[i]))
+            string[i] += LOWERCASE_OFFSET;
     }
 }
