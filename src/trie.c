@@ -62,6 +62,7 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
         if(strcmp(trie_word_blacklist[i],new_string) == 0) return ERROR_INSERT;
     }
 
+    // Checks if the wordlength is greater that the minimum allowed.
     if(trie_min_wordlength != 0 && strlen(new_string) < trie_min_wordlength)
         return ERROR_INSERT;
 
@@ -79,6 +80,7 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
 
         /* If not a word return error */
         if(next_position == -1) return ERROR_INSERT; //TODO: Clean tree or check before
+        
         if(tmp_node->next[next_position] == NULL)
             attach_new_node(tmp_node, next_position);
         

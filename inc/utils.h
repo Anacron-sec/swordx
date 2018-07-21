@@ -5,8 +5,7 @@
 typedef enum {ERROR_TYPE = -1, OTHER , REGULAR_FILE, DIRECTORY, SYMBOLIC_LINK} fileType;
 
 /* 
-** This function is meant to be used after a call to malloc or calloc to test the result.
-** If allocation failed exits with failure the program printing an error. 
+** This function is meant to be used after a call to malloc or calloc to check the results and acts accordingly.
 **/
 void check_heap(void *);
 
