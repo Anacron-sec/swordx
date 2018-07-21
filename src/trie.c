@@ -56,15 +56,15 @@ void destroy_trie(TriePtr trie) {
 }
 
 insertStatus trie_insert(TriePtr trie, char* new_string) {
-    
+    // Checks if the wordlength is greater that the minimum allowed.
+    if(trie_min_wordlength != 0 && strlen(new_string) < trie_min_wordlength)
+        return ERROR_INSERT;
+
     // Checks if the word is blacklisted.
     for(int i = 0; i < trie_word_blacklist_size; i++) {
         if(strcmp(trie_word_blacklist[i],new_string) == 0) return ERROR_INSERT;
     }
 
-    // Checks if the wordlength is greater that the minimum allowed.
-    if(trie_min_wordlength != 0 && strlen(new_string) < trie_min_wordlength)
-        return ERROR_INSERT;
 
     struct TrieNode *tmp_node = trie->root_node;
     char *query_next = new_string;
@@ -72,15 +72,15 @@ insertStatus trie_insert(TriePtr trie, char* new_string) {
 
     while(*query_next != '\0') {
         next_position = map_char(*query_next);
+        
+        /* If not a word return error */
+        if(next_position == -1) return ERROR_INSERT; //TODO: Clean tree or check before
 
         /* checks if trie_mode_alpha are allowed */
-        if(next_position >= 0 && next_position <= 9 && trie_mode_alpha == true) {
+        if(next_position <= 9 && trie_mode_alpha == true) {
             return ERROR_INSERT;
         } //TODO: Clean tree or check before
 
-        /* If not a word return error */
-        if(next_position == -1) return ERROR_INSERT; //TODO: Clean tree or check before
-        
         if(tmp_node->next[next_position] == NULL)
             attach_new_node(tmp_node, next_position);
         
