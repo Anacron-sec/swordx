@@ -11,12 +11,12 @@ Inside program folder
 
 ```shell
 make
-make install
+make install # as root
 ```
 
 You should be able to use the 'swordx' command from anywhere.
 
-As an alternative you can build files using Docker, the steps become:
+As an alternative you can build files using Docker, the steps become (run as root):
 ```shell
 # make sure to remove old compiled files
 
@@ -26,7 +26,7 @@ make install
 
 ## Remove
 
-To remove the program just run inside program folder
+To remove the program just run as root inside program folder
 
 ```shell
 make uninstall
@@ -53,3 +53,16 @@ Read words from folder samples and write results to 'output.txt' and sort result
 swordx sample/ -s -o output.txt
 ```
 
+## Development
+To run tests you need the cunit framework, on debian based systems you need to run as root:
+
+```shell
+apt-get update
+apt-get install libcunit1 libcunit1-dev
+```
+
+Next you can run tests using:
+```shell
+make # if you didn't run it previously
+make test
+```
