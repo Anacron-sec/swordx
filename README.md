@@ -24,6 +24,12 @@ As an alternative you can build files using Docker, the steps become (run as roo
 make install
 ```
 
+## Using docker
+You can also run swordx from the official container:
+```shell
+docker run --rm -v $TARGET_FOLDER:/files -v $OUTPUT_FOLDER:/output swordx [options] 
+```
+
 ## Remove
 
 To remove the program just run as root inside program folder
