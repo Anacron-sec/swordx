@@ -27,7 +27,7 @@ make install
 ## Using docker
 You can also run swordx from the official container:
 ```shell
-docker run --rm -v $TARGET_FOLDER:/files -v $OUTPUT_FOLDER:/output swordx [options] 
+docker run --rm -v $TARGET_FOLDER:/files -v $OUTPUT_FOLDER:/output an4cr0n/swordx:latest [options] 
 ```
 
 ## Remove
